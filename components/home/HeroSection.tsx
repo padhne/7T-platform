@@ -50,25 +50,25 @@ export default function HeroSection() {
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[1.05] mb-6 tracking-tight animate-fade-in-up animate-delay-100"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
-            Bespoke Tailoring<br />
-            <span className="text-[#E8620A] italic">For Every Industry</span>
+            Bespoke Uniforms.<br />
+            <span className="text-[#E8620A] italic">Tailored Excellence.</span>
           </h1>
 
           <p className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl font-light leading-relaxed animate-fade-in-up animate-delay-200">
-            Made-to-measure garments and custom uniforms crafted in-house by skilled tailors — quality fabric, perfect fit, competitive pricing.
+            We create genuine bespoke tailoring — timeless, made-to-measure garments crafted exclusively for every client, with the finest artisanal craftsmanship.
           </p>
 
           <div className="flex flex-wrap gap-4 animate-fade-in-up animate-delay-300">
             <Link href="#collections"
               className="bg-[#E8620A] hover:bg-[#CF5507] text-white font-bold py-4 px-9 transition-all duration-200 uppercase tracking-widest text-sm"
             >
-              Explore Collections
+              Explore Our Collections
             </Link>
-            <a href="https://wa.me/97433513924" target="_blank" rel="noopener noreferrer"
+            <Link href="#contact"
               className="border-2 border-white/70 hover:border-[#E8620A] hover:text-[#E8620A] text-white font-bold py-4 px-9 transition-all duration-200 uppercase tracking-widest text-sm"
             >
-              WhatsApp Us
-            </a>
+              Contact Us
+            </Link>
           </div>
 
           {/* Stats bar */}

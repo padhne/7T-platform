@@ -38,10 +38,10 @@ export default function AboutSection() {
             <div className="w-12 h-[3px] bg-[#E8620A] rounded-full mb-8"></div>
 
             <p className="text-lg text-gray-600 leading-relaxed font-light mb-6">
-              Quality fabric, perfect fit, competitive pricing — genuine bespoke tailoring, made-to-measure garments crafted in-house by skilled tailors.
+              We take pride in offering our customers the finest quality fabrics and a perfect fit at a very competitive price. Backed by the knowledge and skill of our in-house tailors, we produce genuine bespoke tailoring — creating timeless sartorial pieces that are made exclusively for every client.
             </p>
             <p className="text-base text-gray-500 leading-relaxed font-light mb-10">
-              Tip Top Uniforms Trading has been providing tailoring, alteration and repair services to the people of Qatar for over 22 years. Our dedicated craftsmen combine traditional techniques with modern precision to deliver garments that define your brand.
+              This craftsmanship is possible because we maintain total control over our garment production, from the first stitch to the last button. Every dress, shirt, and suit we produce carries the dedication of a tailor working with heart — an authentic vocation behind every single piece.
             </p>
 
             <div className="grid grid-cols-2 gap-6 mb-10">

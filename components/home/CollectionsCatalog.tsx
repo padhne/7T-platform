@@ -1,162 +1,127 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
+import { uniformCategories, type UniformItem } from '@/data/collections';
 
-type Category = {
-  id: string;
-  label: string;
-  emoji: string;
-  heroColor: string;
-  desc: string;
-  items: string[];
-};
+/* ─────────────────────────────────────────────────────────────
+ * All data lives in  /data/collections.ts
+ * Import it from there — no data lives in this file.
+ * ──────────────────────────────────────────────────────────── */
 
-const categories: Category[] = [
-  {
-    id: 'corporate',
-    label: 'Corporate',
-    emoji: '🏢',
-    heroColor: '#1B2B4B',
-    desc: 'Professional attire that defines your corporate identity.',
-    items: ['Formal Shirts', 'Formal Pants', 'Polo Shirts', 'T-Shirts', 'Coats & Blazers', 'Suits', 'Ties & Scarves', 'Winter Jackets', 'Skirts', 'Caps'],
-  },
-  {
-    id: 'industrial',
-    label: 'Industrial',
-    emoji: '🏭',
-    heroColor: '#D9620A',
-    desc: 'Safety-first workwear engineered for demanding environments.',
-    items: ['Coveralls', '2pc Coveralls', 'Bib Overalls', 'Multipocket Vests', 'Security Shirts & Pants', 'Safety Coveralls', 'Safety Vests', 'Safety Jackets', 'Reflective Accessories'],
-  },
-  {
-    id: 'hospitality',
-    label: 'Hospitality',
-    emoji: '🏨',
-    heroColor: '#6B2D3E',
-    desc: 'Elegant uniforms for hotels, restaurants, and resorts.',
-    items: ['Front Desk', 'Housekeeping', 'Waiter / Waitress', 'Chef Jackets', 'Laundry Staff', 'Guest Relations', 'Poolside & Lifeguard', 'Spa & Salon'],
-  },
-  {
-    id: 'school',
-    label: 'School',
-    emoji: '🎒',
-    heroColor: '#1C5A8A',
-    desc: 'Durable, comfortable school uniforms built to last.',
-    items: ['Blazers', 'Shirts', 'Pants & Trousers', 'Shorts', 'Skirts', 'Polo Shirts', 'T-Shirts', 'Sweaters & Jumpers'],
-  },
-  {
-    id: 'aviation',
-    label: 'Aviation',
-    emoji: '✈️',
-    heroColor: '#1C1C1C',
-    desc: 'Precision-tailored uniforms for aviation professionals.',
-    items: ['Pilot Shirts', 'Cabin Crew Suits', 'Ground Staff', 'Security Uniforms', 'Flight Jackets', 'Accessories'],
-  },
-  {
-    id: 'healthcare',
-    label: 'Healthcare',
-    emoji: '🏥',
-    heroColor: '#1C6B5A',
-    desc: 'Hygienic, professional attire for medical settings.',
-    items: ['Scrubs', 'Lab Coats', 'Nurse Uniforms', 'Doctor Coats', 'Dental Staff', 'Pharmacy Uniforms'],
-  },
-  {
-    id: 'chef',
-    label: 'Chef',
-    emoji: '👨‍🍳',
-    heroColor: '#8B4513',
-    desc: 'Classic and modern chef wear for kitchen professionals.',
-    items: ["Chef's Jacket", 'Chef Pants', 'Aprons', 'Chef Hats (Toque)', 'Kitchen Caps', 'Oven Mitts'],
-  },
-  {
-    id: 'housekeeping',
-    label: 'Housekeeping',
-    emoji: '🧹',
-    heroColor: '#4A6741',
-    desc: 'Practical, neat uniforms for housekeeping and cleaning staff.',
-    items: ['Housekeeping Dress', 'Aprons', 'Cleaning Staff Uniforms', 'Caps', 'Gloves & Accessories'],
-  },
-];
+/* ─── Professional Product Card ─────────────────────────── */
+export function ProductCard({ item, categoryLabel }: { item: UniformItem; categoryLabel: string }) {
+  return (
+    <div
+      className="group relative flex flex-col bg-[#242424] border border-[#333] overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:border-[#E8620A]/60 hover:shadow-[0_20px_60px_rgba(232,98,10,0.15)]"
+      style={{ borderRadius: 2 }}
+    >
+      {/* Orange accent bar on top */}
+      <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#E8620A] to-[#CF5507] z-10" />
 
+      {/* Image area */}
+      <div className="relative w-full bg-[#1a1a1a] overflow-hidden" style={{ height: 260 }}>
+        <Image
+          src={item.img}
+          alt={item.title}
+          fill
+          sizes="(max-width: 768px) 100vw, 33vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        {/* Category badge */}
+        <span className="absolute top-4 left-4 px-3 py-1 text-[10px] font-bold uppercase tracking-widest bg-[#E8620A] text-white z-10">
+          {categoryLabel}
+        </span>
+      </div>
+
+      {/* Content */}
+      <div className="flex flex-col flex-1 p-6">
+        {/* Title */}
+        <h3 className="text-white font-black text-sm uppercase tracking-widest mb-3 group-hover:text-[#E8620A] transition-colors duration-200">
+          {item.title}
+        </h3>
+
+        {/* Divider */}
+        <div className="w-8 h-[2px] bg-[#E8620A] mb-4" />
+
+        {/* Description */}
+        <p className="text-gray-400 text-sm leading-relaxed font-light flex-1 mb-6">
+          {item.desc}
+        </p>
+
+        {/* CTA */}
+        <a
+          href="https://wa.me/97433513924?text=Hello!%20I%20am%20interested%20in%20your%20uniforms."
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-[#E8620A] border border-[#E8620A]/40 px-4 py-2.5 w-fit transition-all duration-200 hover:bg-[#E8620A] hover:text-white hover:border-[#E8620A]"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          Enquire Now
+        </a>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Main Component ──────────────────────────────────────── */
 export default function CollectionsCatalog() {
-  const [active, setActive] = useState('corporate');
-  const current = categories.find((c) => c.id === active) || categories[0];
+  const [active, setActive] = useState(uniformCategories[0].id);
+  const current = uniformCategories.find((c) => c.id === active) ?? uniformCategories[0];
 
   return (
-    <section id="collections" className="w-full bg-[#FAF8F4] py-28">
-      <div className="max-w-[1600px] mx-auto px-4 md:px-16">
+    <section id="collections" className="w-full bg-[#1C1C1C] py-0">
 
-        {/* Section header */}
-        <div className="mb-14 flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div>
-            <span className="text-[#E8620A] font-bold tracking-[0.28em] uppercase text-xs mb-4 block">Our Collections</span>
-            <h2 className="text-4xl md:text-5xl font-black text-[#1C1C1C] leading-tight"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
-              Uniforms for<br />
-              <span className="italic text-[#E8620A]">Every Industry</span>
-            </h2>
-          </div>
-          <p className="text-gray-500 max-w-sm font-light leading-relaxed">
-            8 specialised categories. All crafted in-house with premium materials and guaranteed fit.
-          </p>
-        </div>
-
-        {/* Category tabs */}
-        <div className="flex flex-wrap gap-3 mb-10">
-          {categories.map((cat) => (
+      {/* ── Category tab bar ── */}
+      <div className="max-w-[1600px] mx-auto px-4 md:px-16 pt-10 pb-0">
+        <div className="flex flex-wrap gap-3">
+          {uniformCategories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActive(cat.id)}
-              className={`flex items-center gap-2 px-5 py-2.5 text-xs font-bold uppercase tracking-widest border transition-all duration-200
-                ${active === cat.id
-                  ? 'bg-[#E8620A] border-[#E8620A] text-white shadow-md'
-                  : 'bg-white border-gray-200 text-gray-600 hover:border-[#E8620A] hover:text-[#E8620A]'
-                }`}
+              className={`px-6 py-2.5 text-xs font-bold uppercase tracking-widest border transition-all duration-200 ${
+                active === cat.id
+                  ? 'bg-[#E8620A] border-[#E8620A] text-white'
+                  : 'bg-transparent border-gray-600 text-gray-400 hover:border-[#E8620A] hover:text-[#E8620A]'
+              }`}
             >
-              <span>{cat.emoji}</span>
-              <span>{cat.label}</span>
+              {cat.label}
             </button>
           ))}
         </div>
+      </div>
 
-        {/* Active category display */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-0 overflow-hidden shadow-xl">
+      {/* ── Panel ── */}
+      <div className="max-w-[1600px] mx-auto px-4 md:px-16 pt-14 pb-20">
 
-          {/* Left colour block */}
-          <div
-            className="lg:col-span-2 flex flex-col justify-end p-10 min-h-[320px]"
-            style={{ backgroundColor: current.heroColor }}
+        {/* Header row */}
+        <div className="flex items-start justify-between mb-16 gap-6">
+          <h2
+            className="text-white font-black text-3xl md:text-5xl leading-tight tracking-wide"
+            style={{ fontFamily: "var(--font-condensed), 'Barlow Condensed', 'Oswald', sans-serif", letterSpacing: '0.05em' }}
           >
-            <span className="text-5xl mb-6">{current.emoji}</span>
-            <h3 className="font-black text-white text-3xl mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>
-              {current.label} Uniforms
-            </h3>
-            <p className="text-white/70 text-sm leading-relaxed font-light mb-6">{current.desc}</p>
-            <a href="https://wa.me/97433513924?text=Hello!%20I%20am%20interested%20in%20your%20uniforms."
-              target="_blank" rel="noopener noreferrer"
-              className="inline-block border-2 border-white/50 hover:border-white hover:bg-white hover:text-[#1C1C1C] text-white font-bold py-3 px-7 transition-all duration-200 uppercase tracking-widest text-xs self-start"
-            >
-              Enquire Now
-            </a>
+            {current.heading}
+          </h2>
+          {/* 7T logo badge */}
+          <div
+            className="shrink-0 w-20 h-20 flex items-center justify-center border border-gray-600 text-white font-black text-2xl"
+            style={{
+              background: 'linear-gradient(135deg, #555 0%, #888 50%, #444 100%)',
+              clipPath: 'polygon(12px 0%, 100% 0%, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0% 100%, 0% 12px)',
+            }}
+          >
+            <span style={{ color: '#E8620A', fontFamily: "'Barlow Condensed', sans-serif", fontSize: '2.5rem' }}>7</span>
+            <span className="text-white text-xl">T</span>
           </div>
+        </div>
 
-          {/* Right items grid */}
-          <div className="lg:col-span-3 bg-white p-10">
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">
-              {current.items.length} Items Available
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {current.items.map((item) => (
-                <div key={item}
-                  className="group flex items-center gap-3 py-3 border-b border-gray-100 hover:border-[#E8620A] transition-colors cursor-default"
-                >
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#E8620A] shrink-0 group-hover:scale-150 transition-transform"></div>
-                  <span className="text-sm font-semibold text-gray-700 group-hover:text-[#E8620A] transition-colors">{item}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+        {/* 3-column product card grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {current.items.map((item, idx) => (
+            <ProductCard key={idx} item={item} categoryLabel={current.label} />
+          ))}
         </div>
       </div>
     </section>

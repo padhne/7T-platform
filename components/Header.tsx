@@ -2,17 +2,28 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Search, User, ShoppingBag, Menu, X, Phone, Mail, MapPin } from 'lucide-react';
+import { uniformCategories } from '@/data/collections';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const navLinks = [
+    { label: 'Home', href: '/' },
+    { label: 'Collections', href: '/collections' },
+    { label: 'Services', href: '/services' },
+    { label: 'About', href: '/about' },
+    { label: 'Contact', href: '/contact' },
+  ];
 
   return (
     <header className={`w-full bg-white sticky top-0 z-50 transition-shadow duration-300 ${scrolled ? 'shadow-md' : ''}`}>
@@ -56,19 +67,18 @@ export default function Header() {
 
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-8">
-          {[
-            { label: 'Home', href: '/' },
-            { label: 'Collections', href: '#collections' },
-            { label: 'Services', href: '#alterations' },
-            { label: 'About', href: '#about' },
-            { label: 'Contact', href: '#contact' },
-          ].map((item) => (
-            <Link key={item.label} href={item.href}
-              className="nav-link text-[13px] font-bold tracking-widest uppercase text-gray-700 hover:text-[#E8620A]"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {navLinks.map((item) => {
+            const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
+            return (
+              <Link key={item.label} href={item.href}
+                className={`nav-link text-[13px] font-bold tracking-widest uppercase transition-colors ${
+                  isActive ? 'text-[#E8620A] border-b-2 border-[#E8620A]' : 'text-gray-700 hover:text-[#E8620A]'
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
 
         {/* Actions */}
@@ -98,14 +108,32 @@ export default function Header() {
       {/* Category Strip */}
       <div className="border-t border-gray-100 bg-[#FAF8F4] hidden md:block">
         <div className="max-w-[1600px] mx-auto px-4 md:px-8">
-          <ul className="flex items-center gap-8 py-2.5 overflow-x-auto text-[11px] font-bold tracking-widest uppercase text-gray-500">
-            {['Corporate', 'Industrial', 'Hospitality', 'School', 'Healthcare', 'Aviation', 'Alterations'].map((cat) => (
-              <li key={cat}>
-                <Link href={`#${cat.toLowerCase()}`} className="hover:text-[#E8620A] transition-colors whitespace-nowrap">
-                  {cat}
-                </Link>
-              </li>
-            ))}
+          <ul className="flex items-center gap-8 py-2.5 overflow-x-auto text-[11px] font-bold tracking-widest uppercase">
+            {uniformCategories.map((cat) => {
+              const isActive = pathname === `/collections/${cat.id}`;
+              return (
+                <li key={cat.id}>
+                  <Link 
+                    href={`/collections/${cat.id}`} 
+                    className={`whitespace-nowrap transition-colors ${
+                      isActive ? 'text-[#E8620A]' : 'text-gray-500 hover:text-[#E8620A]'
+                    }`}
+                  >
+                    {cat.label}
+                  </Link>
+                </li>
+              );
+            })}
+            <li>
+              <Link 
+                href="/services" 
+                className={`whitespace-nowrap transition-colors ${
+                  pathname === '/services' ? 'text-[#E8620A]' : 'text-gray-500 hover:text-[#E8620A]'
+                }`}
+              >
+                Alterations
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
@@ -114,20 +142,19 @@ export default function Header() {
       {menuOpen && (
         <div className="lg:hidden border-t border-gray-100 bg-white shadow-xl absolute w-full left-0 top-full z-50">
           <nav className="max-w-[1600px] mx-auto px-6 py-6 flex flex-col gap-4">
-            {[
-              { label: 'Home', href: '/' },
-              { label: 'Collections', href: '#collections' },
-              { label: 'Services', href: '#alterations' },
-              { label: 'About', href: '#about' },
-              { label: 'Contact', href: '#contact' },
-            ].map((item) => (
-              <Link key={item.label} href={item.href}
-                onClick={() => setMenuOpen(false)}
-                className="text-sm font-bold tracking-widest uppercase text-gray-700 hover:text-[#E8620A] py-2 border-b border-gray-100"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navLinks.map((item) => {
+              const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
+              return (
+                <Link key={item.label} href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  className={`text-sm font-bold tracking-widest uppercase py-2 border-b border-gray-100 ${
+                    isActive ? 'text-[#E8620A]' : 'text-gray-700 hover:text-[#E8620A]'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
             <a
               href="https://wa.me/97433513924"
               className="mt-2 inline-flex items-center justify-center gap-2 bg-green-600 text-white text-xs font-bold py-3 px-6 rounded-full"

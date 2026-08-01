@@ -22,7 +22,7 @@ export default function MissionVisionSection() {
               <div className="relative pl-8 before:absolute before:left-0 before:top-0 before:h-full before:w-[3px] before:bg-[#E8620A]">
                 <h3 className="font-black text-[#1C1C1C] text-lg uppercase tracking-wider mb-3">Our Mission</h3>
                 <p className="text-gray-600 leading-relaxed font-light text-base">
-                  Providing quality product and highest service with standards platform to clients, ensuring career opportunities for employees and continued support to society.
+                  Providing the highest quality products and service standards to our clients — while ensuring career opportunities for our employees and continued support to our community.
                 </p>
               </div>
 
@@ -30,7 +30,7 @@ export default function MissionVisionSection() {
               <div className="relative pl-8 before:absolute before:left-0 before:top-0 before:h-full before:w-[3px] before:bg-[#3A3A3A]">
                 <h3 className="font-black text-[#1C1C1C] text-lg uppercase tracking-wider mb-3">Our Vision</h3>
                 <p className="text-gray-600 leading-relaxed font-light text-base">
-                  A world-class, unbeatable quality and fitting guarantee across all clothing lines, backed by proprietary Retro Uniform bespoke tailoring.
+                  Our ambition is to deliver world-class, unbeatable quality and a guaranteed fit across every category of clothing in the market — backed by our own signature Retro Uniform bespoke tailoring.
                 </p>
               </div>
 

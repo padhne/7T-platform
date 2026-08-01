@@ -5,18 +5,18 @@ import { Heart, Shield, Lightbulb } from 'lucide-react';
 const values = [
   {
     icon: <Heart size={32} strokeWidth={1.5} />,
-    title: 'Client Success',
-    desc: 'Dedication to our clients\' success drives every stitch, every garment, every interaction.',
+    title: 'Dedication',
+    desc: 'Dedication to every client\'s success.',
   },
   {
     icon: <Shield size={32} strokeWidth={1.5} />,
-    title: 'Trust & Responsibility',
-    desc: 'We operate with personal accountability — your trust is the foundation of our business.',
+    title: 'Trust & Personal Responsibility',
+    desc: 'Trust and personal responsibility in all relationships.',
   },
   {
     icon: <Lightbulb size={32} strokeWidth={1.5} />,
     title: 'Innovation',
-    desc: 'Constantly evolving our craft with new techniques, fabrics and sustainable practices.',
+    desc: 'Innovation that matters for our company and for the world.',
   },
 ];
 

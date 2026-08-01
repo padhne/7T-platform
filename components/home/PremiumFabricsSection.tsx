@@ -29,7 +29,7 @@ export default function PremiumFabricsSection() {
           <div>
             <div className="w-12 h-[3px] bg-[#E8620A] rounded-full mb-6"></div>
             <p className="text-gray-600 leading-relaxed font-light text-lg">
-              A wide variety of fabric compositions for high-fashion looks; embroidered, handmade artwork, wool, laser-cut silk, and cotton, with a growing focus on sustainability.
+              Quality isn&apos;t just about material — it&apos;s about intention. At Tip Top, we work with a wide variety of fabric compositions, chosen to bring performance and comfort to every uniform we create. But we go beyond offering premium fabric alone — we deliver something more: the subtlety of design paired with the true composition of fabric. Embroidered handwork, wool, laser-cut silk, and cotton are just a few of the materials that place our garments in the luxury segment. As we look to the future, our commitment to premium fabric will only grow, defined through sustainability and complete satisfaction for our valued customers.
             </p>
           </div>
         </div>

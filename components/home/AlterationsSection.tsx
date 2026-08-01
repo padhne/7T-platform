@@ -32,7 +32,9 @@ export default function AlterationsSection() {
             <div className="w-12 h-[3px] bg-[#E8620A] rounded-full mb-8"></div>
 
             <p className="text-gray-400 leading-relaxed font-light text-base mb-10">
-              Professional alteration and repair services for every garment. From simple hemming to full re-lining — even emergency rush alterations available.
+              From everyday repairs to formalwear restyling, we offer expert alteration services, including:<br/><br/>
+              Suits, trousers, jeans, shirts, blouses, dresses, wedding gowns, evening gowns, blazers, leather jackets, sarees, cheongsams, curtains, and more.<br/><br/>
+              <strong>Services include:</strong> custom tailoring, hole and tear repair, button-hole work, zipper replacement, jeans patching, re-weaving, outerwear re-lining, curtain shortening/lengthening and duplication, and emergency rush services.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
