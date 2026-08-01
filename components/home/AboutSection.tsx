@@ -1,0 +1,72 @@
+'use client';
+import React from 'react';
+
+
+export default function AboutSection() {
+  return (
+    <section id="about" className="py-28 bg-white w-full">
+      <div className="max-w-[1600px] mx-auto px-4 md:px-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+
+          {/* Image */}
+          <div className="relative">
+            <div className="relative h-[580px] w-full overflow-hidden">
+              <img
+                src="/images/about_tailor.png"
+                alt="Tailor buttoning a cufflink — bespoke luxury tailoring"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {/* Offset orange border accent */}
+            <div className="absolute -bottom-4 -right-4 w-3/4 h-3/4 border-2 border-[#E8620A] -z-10 pointer-events-none"></div>
+            {/* Floating stat badge */}
+            <div className="absolute -top-6 -left-6 bg-[#E8620A] text-white px-6 py-4 shadow-xl">
+              <p className="text-3xl font-black">22+</p>
+              <p className="text-[10px] font-bold tracking-widest uppercase leading-tight mt-0.5">Years of<br />Bespoke Craft</p>
+            </div>
+          </div>
+
+          {/* Text */}
+          <div>
+            <span className="text-[#E8620A] font-bold tracking-[0.28em] uppercase text-xs mb-4 block">About Us</span>
+            <h2 className="text-4xl md:text-5xl font-black text-[#1C1C1C] mb-6 leading-tight"
+              style={{ fontFamily: "'Playfair Display', serif" }}
+            >
+              We Seize<br />
+              <span className="italic text-[#E8620A]">Satisfaction</span>
+            </h2>
+            <div className="w-12 h-[3px] bg-[#E8620A] rounded-full mb-8"></div>
+
+            <p className="text-lg text-gray-600 leading-relaxed font-light mb-6">
+              Quality fabric, perfect fit, competitive pricing — genuine bespoke tailoring, made-to-measure garments crafted in-house by skilled tailors.
+            </p>
+            <p className="text-base text-gray-500 leading-relaxed font-light mb-10">
+              Tip Top Uniforms Trading has been providing tailoring, alteration and repair services to the people of Qatar for over 22 years. Our dedicated craftsmen combine traditional techniques with modern precision to deliver garments that define your brand.
+            </p>
+
+            <div className="grid grid-cols-2 gap-6 mb-10">
+              {[
+                { label: 'Corporate Uniforms' },
+                { label: 'Industrial Workwear' },
+                { label: 'School Uniforms' },
+                { label: 'Hospitality Wear' },
+              ].map((item) => (
+                <div key={item.label} className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-[#E8620A] rounded-full shrink-0"></div>
+                  <span className="text-sm font-semibold text-gray-700">{item.label}</span>
+                </div>
+              ))}
+            </div>
+
+            <a href="#collections"
+              className="inline-block bg-[#1C1C1C] hover:bg-[#E8620A] text-white font-bold py-4 px-9 transition-all duration-200 uppercase tracking-widest text-sm"
+            >
+              View Collections
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
