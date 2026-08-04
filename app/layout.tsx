@@ -27,8 +27,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${lato.variable} ${barlowCondensed.variable} antialiased h-full`} data-scroll-behavior="smooth">
-      <body className="min-h-full flex flex-col font-sans bg-background text-foreground">
+    <html lang="en" className={`${lato.variable} ${barlowCondensed.variable} antialiased h-full `} data-scroll-behavior="smooth">
+      <body className="min-h-full flex flex-col font-sans bg-background text-foreground pb-16 md:pb-0">
         <Header />
         <main className="flex-1 w-full flex flex-col">
           {children}

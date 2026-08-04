@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Search, User, ShoppingBag, Menu, X } from 'lucide-react';
+import { Search, User, ShoppingBag, Menu, X, Home, Grid, Phone } from 'lucide-react';
 import { uniformCategories } from '@/data/collections';
 import AuthModal from '@/components/AuthModal';
 
@@ -41,7 +41,7 @@ export default function Header() {
         <div className="max-w-[1600px] mx-auto px-4 md:px-8">
 
           {/* Top Section */}
-          <div className="flex flex-col md:flex-row items-center justify-between py-6">
+          <div className="flex flex-row items-center justify-between py-4 md:py-6">
 
             {/* Logo (Left) */}
             <Link href="/" className="flex items-center gap-3 group" aria-label="Tip Top Uniforms Trading">
@@ -65,22 +65,15 @@ export default function Header() {
               </button>
             </div>
 
-            {/* Actions (Right) */}
-            {/* <div className="flex items-center gap-6 mt-4 md:mt-0">
-              <Link href="#" className="flex items-center gap-2 text-gray-900 hover:text-[#8B1A3B] transition-colors" aria-label="Cart">
-                <ShoppingBag size={20} strokeWidth={1.5} />
-                <span className="bg-[#EFA7A7] text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
-              </Link>
-              <button onClick={() => setAuthModalOpen(true)} className="text-gray-900 hover:text-[#8B1A3B] transition-colors" aria-label="User Account">
-                <User size={22} strokeWidth={1.5} />
+            {/* Mobile Top Right Actions */}
+            <div className="flex md:hidden items-center gap-4">
+              <button className="text-gray-900" aria-label="Search">
+                <Search size={22} strokeWidth={1.5} />
               </button>
-              <a href="/catalog" className="text-[12px] font-bold text-[#1C1C1C] border-b-[1.5px] border-[#1C1C1C] hover:text-[#8B1A3B] hover:border-[#8B1A3B] pb-0.5 transition-colors uppercase tracking-wide">
-                GET CATALOGUE
-              </a>
-              <button className="md:hidden text-gray-900 ml-2" onClick={() => setMenuOpen(!menuOpen)}>
-                {menuOpen ? <X size={24} /> : <Menu size={24} />}
+              <button className="text-gray-900" onClick={() => setMenuOpen(!menuOpen)}>
+                {menuOpen ? <X size={26} strokeWidth={1.5} /> : <Menu size={26} strokeWidth={1.5} />}
               </button>
-            </div> */}
+            </div>
           </div>
 
           {/* Main Nav (Bottom of top section) */}
@@ -117,21 +110,40 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Hamburger Menu (Categories) */}
         {menuOpen && (
           <div className="md:hidden border-t border-gray-100 bg-white shadow-xl absolute w-full left-0 top-full z-50">
-            <nav className="px-6 py-4 flex flex-col gap-4">
-              {navLinks.map((item) => (
+            <div className="px-6 py-4 flex flex-col gap-1">
+              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Categories</h3>
+              {subNavLinks.map((item) => (
                 <Link key={item.label} href={item.href} onClick={() => setMenuOpen(false)}
-                  className="text-[13px] font-bold tracking-widest uppercase py-2 border-b border-gray-100 text-gray-700"
+                  className="text-[14px] font-semibold py-3 border-b border-gray-50 text-gray-800 flex items-center justify-between"
                 >
                   {item.label}
                 </Link>
               ))}
-            </nav>
+            </div>
           </div>
         )}
       </header>
+
+      {/* Mobile Bottom Navigation Bar */}
+      <div className="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 shadow-[0_-4px_10px_rgba(0,0,0,0.05)] z-50 pb-safe">
+        <div className="flex justify-around items-center h-16">
+          <Link href="/" className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${pathname === '/' ? 'text-[#8B1A3B]' : 'text-gray-500'}`}>
+            <Home size={22} strokeWidth={pathname === '/' ? 2.5 : 1.5} />
+            <span className="text-[10px] font-semibold">Home</span>
+          </Link>
+          <Link href="/collections" className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${pathname.startsWith('/collections') ? 'text-[#8B1A3B]' : 'text-gray-500'}`}>
+            <Grid size={22} strokeWidth={pathname.startsWith('/collections') ? 2.5 : 1.5} />
+            <span className="text-[10px] font-semibold">Products</span>
+          </Link>
+          <Link href="/contact" className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${pathname === '/contact' ? 'text-[#8B1A3B]' : 'text-gray-500'}`}>
+            <Phone size={22} strokeWidth={pathname === '/contact' ? 2.5 : 1.5} />
+            <span className="text-[10px] font-semibold">Contact</span>
+          </Link>
+        </div>
+      </div>
 
       <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
     </>
