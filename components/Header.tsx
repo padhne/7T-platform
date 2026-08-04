@@ -22,7 +22,7 @@ export default function Header() {
   const navLinks = [
     { label: 'HOMEPAGE', href: '/' },
     { label: 'PRODUCTS', href: '/collections' },
-    { label: 'PROMOTIONAL PROJECTS', href: '/promotional' },
+    // { label: 'PROMOTIONAL PROJECTS', href: '/promotional' },
     { label: 'CONTACT', href: '/contact' },
   ];
 
@@ -39,10 +39,10 @@ export default function Header() {
     <>
       <header className={`w-full bg-white z-50 transition-shadow duration-300 ${scrolled ? 'shadow-md sticky top-0' : 'relative'}`}>
         <div className="max-w-[1600px] mx-auto px-4 md:px-8">
-          
+
           {/* Top Section */}
           <div className="flex flex-col md:flex-row items-center justify-between py-6">
-            
+
             {/* Logo (Left) */}
             <Link href="/" className="flex items-center gap-3 group" aria-label="Tip Top Uniforms Trading">
               <div className="relative flex items-end leading-none select-none">
@@ -57,8 +57,8 @@ export default function Header() {
 
             {/* Middle Info (Phone & Search) */}
             <div className="hidden md:flex items-center gap-6">
-              <a href="tel:+97433513924" className="text-[13px] font-medium text-[#1C1C1C] hover:text-[#8B1A3B] transition-colors">
-                +974 3351 3924
+              <a href="tel:+97455016644" className="text-[13px] font-medium text-[#1C1C1C] hover:text-[#8B1A3B] transition-colors">
+                +974 5501 6644
               </a>
               <button className="text-gray-900 hover:text-[#8B1A3B] transition-colors" aria-label="Search">
                 <Search size={20} strokeWidth={1.5} />
@@ -66,7 +66,7 @@ export default function Header() {
             </div>
 
             {/* Actions (Right) */}
-            <div className="flex items-center gap-6 mt-4 md:mt-0">
+            {/* <div className="flex items-center gap-6 mt-4 md:mt-0">
               <Link href="#" className="flex items-center gap-2 text-gray-900 hover:text-[#8B1A3B] transition-colors" aria-label="Cart">
                 <ShoppingBag size={20} strokeWidth={1.5} />
                 <span className="bg-[#EFA7A7] text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
@@ -80,7 +80,7 @@ export default function Header() {
               <button className="md:hidden text-gray-900 ml-2" onClick={() => setMenuOpen(!menuOpen)}>
                 {menuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
-            </div>
+            </div> */}
           </div>
 
           {/* Main Nav (Bottom of top section) */}
@@ -89,9 +89,8 @@ export default function Header() {
               const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
               return (
                 <Link key={item.label} href={item.href}
-                  className={`text-[13px] font-bold uppercase tracking-wider transition-colors ${
-                    isActive ? 'text-[#1C1C1C] border-b-2 border-[#1C1C1C] pb-1' : 'text-gray-600 hover:text-[#1C1C1C]'
-                  }`}
+                  className={`text-[13px] font-bold uppercase tracking-wider transition-colors ${isActive ? 'text-[#1C1C1C] border-b-2 border-[#1C1C1C] pb-1' : 'text-gray-600 hover:text-[#1C1C1C]'
+                    }`}
                 >
                   {item.label}
                 </Link>
@@ -106,8 +105,8 @@ export default function Header() {
             <ul className="flex items-center gap-8 py-3 overflow-x-auto text-[13px] font-medium text-gray-700">
               {subNavLinks.map((link, idx) => (
                 <li key={idx}>
-                  <Link 
-                    href={link.href} 
+                  <Link
+                    href={link.href}
                     className="whitespace-nowrap hover:text-black transition-colors capitalize"
                   >
                     {link.label}

@@ -36,15 +36,15 @@ export default function Footer() {
             <div className="space-y-3 text-sm text-gray-400">
               <div className="flex items-start gap-3">
                 <MapPin size={14} className="text-[#E8620A] mt-0.5 shrink-0" />
-                <span>Umm Ghuwalina St. 874,<br />Zone 27, Doha, Qatar</span>
+                <span>Shop No. F-62,<br />Al Jaher Center, Doha-Qatar</span>
               </div>
-              <a href="tel:+97433513924" className="flex items-center gap-3 hover:text-[#E8620A] transition-colors">
-                <Phone size={14} className="text-[#E8620A] shrink-0" />
-                +974 3351 3924
-              </a>
               <a href="tel:+97455016644" className="flex items-center gap-3 hover:text-[#E8620A] transition-colors">
                 <Phone size={14} className="text-[#E8620A] shrink-0" />
                 +974 5501 6644
+              </a>
+              <a href="tel:+97466901189" className="flex items-center gap-3 hover:text-[#E8620A] transition-colors">
+                <Phone size={14} className="text-[#E8620A] shrink-0" />
+                +974 6690 1189
               </a>
               <a href="mailto:info.tiptopuniforms@gmail.com" className="flex items-center gap-3 hover:text-[#E8620A] transition-colors">
                 <Mail size={14} className="text-[#E8620A] shrink-0" />
@@ -52,7 +52,7 @@ export default function Footer() {
               </a>
             </div>
 
-            <a href="https://wa.me/97433513924" target="_blank" rel="noopener noreferrer"
+            <a href="https://wa.me/97455016644" target="_blank" rel="noopener noreferrer"
               className="mt-6 inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white text-xs font-bold py-2.5 px-5 rounded-full transition-colors"
             >
               <MessageCircle size={13} />

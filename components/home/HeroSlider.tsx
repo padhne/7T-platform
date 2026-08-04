@@ -22,7 +22,7 @@ export default function HeroSlider() {
           Best Workwear and Denim Trader and Online Sellers
         </span>
         <h1 className="text-5xl md:text-8xl font-black text-white tracking-tight uppercase leading-[0.9] drop-shadow-lg mb-6">
-          Vik Qatar<br />Workwear
+          Tip Top Uniforms<br />Workwear
         </h1>
         <p className="text-white text-sm md:text-lg mb-10 drop-shadow-md">
           An exclusive selection of this season's trends.

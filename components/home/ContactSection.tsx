@@ -28,8 +28,8 @@ export default function ContactSection() {
                 <div>
                   <p className="font-black text-[#1C1C1C] text-sm uppercase tracking-wider mb-1">Our Address</p>
                   <p className="text-gray-500 text-sm leading-relaxed">
-                    Umm Ghuwalina Street no. 874<br />
-                    Zone no. 27, Doha, Qatar
+                    Shop No. F-62, Al Jaher Center<br />
+                    Doha-Qatar
                   </p>
                 </div>
               </div>
@@ -40,8 +40,8 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <p className="font-black text-[#1C1C1C] text-sm uppercase tracking-wider mb-1">Mobile</p>
-                  <a href="tel:+97433513924" className="text-gray-500 text-sm hover:text-[#E8620A] transition-colors block">+974 3351 3924</a>
                   <a href="tel:+97455016644" className="text-gray-500 text-sm hover:text-[#E8620A] transition-colors block">+974 5501 6644</a>
+                  <a href="tel:+97466901189" className="text-gray-500 text-sm hover:text-[#E8620A] transition-colors block">+974 6690 1189</a>
                 </div>
               </div>
 
@@ -60,7 +60,7 @@ export default function ContactSection() {
 
             {/* WhatsApp CTA */}
             <a
-              href="https://wa.me/97433513924?text=Hello!%20I%20would%20like%20to%20enquire%20about%20uniforms."
+              href="https://wa.me/97455016644?text=Hello!%20I%20would%20like%20to%20enquire%20about%20uniforms."
               target="_blank" rel="noopener noreferrer"
               className="mt-10 inline-flex items-center gap-3 bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 transition-all duration-200 uppercase tracking-widest text-sm"
             >

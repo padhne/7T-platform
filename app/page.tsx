@@ -41,7 +41,7 @@ export default function Home() {
       <ValuesSection />
 
       {/* 10. Contact */}
-      <ContactSection />
+      {/* <ContactSection /> */}
     </div>
   );
 }

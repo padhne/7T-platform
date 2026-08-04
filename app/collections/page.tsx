@@ -1,5 +1,6 @@
 import React from 'react';
 import CollectionsCatalog from '@/components/home/CollectionsCatalog';
+import ProductCategories from '@/components/home/ProductCategories';
 
 export default function CollectionsPage() {
   return (
@@ -11,7 +12,8 @@ export default function CollectionsPage() {
         </h1>
         <div className="w-12 h-[3px] bg-[#E8620A] rounded-full mt-6"></div>
       </div>
-      <CollectionsCatalog />
+      {/* <CollectionsCatalog /> */}
+      <ProductCategories />
     </div>
   );
 }

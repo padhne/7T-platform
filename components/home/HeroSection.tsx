@@ -19,7 +19,7 @@ export default function HeroSection() {
 
   return (
     <div className="w-full flex flex-col bg-white">
-      <section className="relative w-full h-[600px] md:h-[750px] flex items-center justify-center overflow-hidden mx-auto max-w-[1920px]">
+      <section className="relative w-full h-[600px] md:h-[700px] flex items-center justify-center overflow-hidden mx-auto max-w-[1920px]">
         {/* Background Image with parallax */}
         <div ref={imgRef} className="absolute inset-0 z-0 will-change-transform">
           <img
@@ -47,7 +47,7 @@ export default function HeroSection() {
 
         {/* Content (Centered) */}
         <div className="relative z-30 w-full max-w-[1200px] mx-auto px-6 flex flex-col items-center text-center">
-          
+
           <h3 className="text-sm md:text-base font-bold tracking-[0.2em] text-white uppercase mb-4 animate-fade-in-up">
             Genuine Bespoke Tailoring & Online Orders
           </h3>
