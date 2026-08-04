@@ -3,12 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Search, User, ShoppingBag, Menu, X, Phone, Mail, MapPin } from 'lucide-react';
+import { Search, User, ShoppingBag, Menu, X } from 'lucide-react';
 import { uniformCategories } from '@/data/collections';
+import AuthModal from '@/components/AuthModal';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -18,152 +20,121 @@ export default function Header() {
   }, []);
 
   const navLinks = [
-    { label: 'Home', href: '/' },
-    { label: 'Collections', href: '/collections' },
-    { label: 'Services', href: '/services' },
-    { label: 'About', href: '/about' },
-    { label: 'Contact', href: '/contact' },
+    { label: 'HOMEPAGE', href: '/' },
+    { label: 'PRODUCTS', href: '/collections' },
+    { label: 'PROMOTIONAL PROJECTS', href: '/promotional' },
+    { label: 'CONTACT', href: '/contact' },
+  ];
+
+  const subNavLinks = [
+    { label: 'Aprons', href: '/collections/aprons' },
+    { label: 'Tops', href: '/collections/tops' },
+    { label: 'Bottoms', href: '/collections/bottoms' },
+    { label: 'Chef', href: '/collections/chef' },
+    { label: 'Suiting', href: '/collections/suiting' },
+    { label: 'Products', href: '/collections' },
   ];
 
   return (
-    <header className={`w-full bg-white sticky top-0 z-50 transition-shadow duration-300 ${scrolled ? 'shadow-md' : ''}`}>
-
-      {/* Top Info Bar */}
-      <div className="bg-[#1C1C1C] text-white text-xs py-2 px-4 md:px-8">
-        <div className="max-w-[1600px] mx-auto flex justify-between items-center gap-4">
-          <div className="flex items-center gap-6">
-            <a href="tel:+97433513924" className="flex items-center gap-1.5 hover:text-orange-400 transition-colors">
-              <Phone size={11} />
-              <span>+974 3351 3924</span>
-            </a>
-            <a href="mailto:info.tiptopuniforms@gmail.com" className="hidden md:flex items-center gap-1.5 hover:text-orange-400 transition-colors">
-              <Mail size={11} />
-              <span>info.tiptopuniforms@gmail.com</span>
-            </a>
-          </div>
-          <div className="flex items-center gap-1.5 text-gray-400">
-            <MapPin size={11} />
-            <span className="hidden md:block">Umm Ghuwalina St. 874, Zone 27, Doha, Qatar</span>
-            <span className="md:hidden">Doha, Qatar</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Header */}
-      <div className="max-w-[1600px] mx-auto px-4 md:px-8 py-5 flex items-center justify-between">
-
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group" aria-label="Tip Top Uniforms Trading">
-          {/* 7T Mark */}
-          <div className="relative flex items-end leading-none select-none">
-            <span className="text-[42px] font-black italic text-[#E8620A] leading-none tracking-tighter" style={{ fontFamily: "'Playfair Display', serif" }}>7</span>
-            <span className="text-[42px] font-black italic text-[#3A3A3A] leading-none tracking-tighter" style={{ fontFamily: "'Playfair Display', serif" }}>T</span>
-          </div>
-          <div className="flex flex-col border-l-2 border-[#E8620A] pl-3">
-            <span className="text-[13px] font-black tracking-[0.18em] leading-tight text-[#1C1C1C] uppercase">Tip Top Uniforms</span>
-            <span className="text-[9px] font-bold text-[#E8620A] uppercase tracking-[0.22em] mt-0.5">Trading · Doha, Qatar</span>
-          </div>
-        </Link>
-
-        {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-8">
-          {navLinks.map((item) => {
-            const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
-            return (
-              <Link key={item.label} href={item.href}
-                className={`nav-link text-[13px] font-bold tracking-widest uppercase transition-colors ${
-                  isActive ? 'text-[#E8620A] border-b-2 border-[#E8620A]' : 'text-gray-700 hover:text-[#E8620A]'
-                }`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
-
-        {/* Actions */}
-        <div className="flex items-center gap-5">
-          <button className="text-gray-700 hover:text-[#E8620A] transition-colors hidden md:block" aria-label="Search">
-            <Search size={20} strokeWidth={1.8} />
-          </button>
-          <Link href="#" className="relative text-gray-700 hover:text-[#E8620A] transition-colors" aria-label="Cart">
-            <ShoppingBag size={20} strokeWidth={1.8} />
-            <span className="absolute -top-1.5 -right-2 bg-[#E8620A] text-white text-[9px] font-black rounded-full w-4 h-4 flex items-center justify-center">0</span>
-          </Link>
-          <a
-            href="https://wa.me/97433513924"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden md:inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-xs font-bold py-2.5 px-5 rounded-full transition-colors tracking-wider"
-          >
-            WhatsApp
-          </a>
-          {/* Mobile Menu Toggle */}
-          <button className="lg:hidden text-gray-700 hover:text-[#E8620A] transition-colors" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
-            {menuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
-        </div>
-      </div>
-
-      {/* Category Strip */}
-      <div className="border-t border-gray-100 bg-[#FAF8F4] hidden md:block">
+    <>
+      <header className={`w-full bg-white z-50 transition-shadow duration-300 ${scrolled ? 'shadow-md sticky top-0' : 'relative'}`}>
         <div className="max-w-[1600px] mx-auto px-4 md:px-8">
-          <ul className="flex items-center gap-8 py-2.5 overflow-x-auto text-[11px] font-bold tracking-widest uppercase">
-            {uniformCategories.map((cat) => {
-              const isActive = pathname === `/collections/${cat.id}`;
-              return (
-                <li key={cat.id}>
-                  <Link 
-                    href={`/collections/${cat.id}`} 
-                    className={`whitespace-nowrap transition-colors ${
-                      isActive ? 'text-[#E8620A]' : 'text-gray-500 hover:text-[#E8620A]'
-                    }`}
-                  >
-                    {cat.label}
-                  </Link>
-                </li>
-              );
-            })}
-            <li>
-              <Link 
-                href="/services" 
-                className={`whitespace-nowrap transition-colors ${
-                  pathname === '/services' ? 'text-[#E8620A]' : 'text-gray-500 hover:text-[#E8620A]'
-                }`}
-              >
-                Alterations
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
+          
+          {/* Top Section */}
+          <div className="flex flex-col md:flex-row items-center justify-between py-6">
+            
+            {/* Logo (Left) */}
+            <Link href="/" className="flex items-center gap-3 group" aria-label="Tip Top Uniforms Trading">
+              <div className="relative flex items-end leading-none select-none">
+                <span className="text-[42px] font-black italic text-[#8B1A3B] leading-none tracking-tighter" style={{ fontFamily: "'Playfair Display', serif" }}>7</span>
+                <span className="text-[42px] font-black italic text-[#8B1A3B] leading-none tracking-tighter" style={{ fontFamily: "'Playfair Display', serif" }}>T</span>
+              </div>
+              <div className="flex flex-col border-l-2 border-gray-300 pl-3">
+                <span className="text-[14px] font-bold tracking-widest leading-tight text-[#1C1C1C] uppercase">TIP TOP UNIFORMS</span>
+                <span className="text-[9px] font-medium text-gray-500 uppercase tracking-widest mt-0.5">MADE IN QATAR</span>
+              </div>
+            </Link>
 
-      {/* Mobile Menu Drawer */}
-      {menuOpen && (
-        <div className="lg:hidden border-t border-gray-100 bg-white shadow-xl absolute w-full left-0 top-full z-50">
-          <nav className="max-w-[1600px] mx-auto px-6 py-6 flex flex-col gap-4">
+            {/* Middle Info (Phone & Search) */}
+            <div className="hidden md:flex items-center gap-6">
+              <a href="tel:+97433513924" className="text-[13px] font-medium text-[#1C1C1C] hover:text-[#8B1A3B] transition-colors">
+                +974 3351 3924
+              </a>
+              <button className="text-gray-900 hover:text-[#8B1A3B] transition-colors" aria-label="Search">
+                <Search size={20} strokeWidth={1.5} />
+              </button>
+            </div>
+
+            {/* Actions (Right) */}
+            <div className="flex items-center gap-6 mt-4 md:mt-0">
+              <Link href="#" className="flex items-center gap-2 text-gray-900 hover:text-[#8B1A3B] transition-colors" aria-label="Cart">
+                <ShoppingBag size={20} strokeWidth={1.5} />
+                <span className="bg-[#EFA7A7] text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+              </Link>
+              <button onClick={() => setAuthModalOpen(true)} className="text-gray-900 hover:text-[#8B1A3B] transition-colors" aria-label="User Account">
+                <User size={22} strokeWidth={1.5} />
+              </button>
+              <a href="/catalog" className="text-[12px] font-bold text-[#1C1C1C] border-b-[1.5px] border-[#1C1C1C] hover:text-[#8B1A3B] hover:border-[#8B1A3B] pb-0.5 transition-colors uppercase tracking-wide">
+                GET CATALOGUE
+              </a>
+              <button className="md:hidden text-gray-900 ml-2" onClick={() => setMenuOpen(!menuOpen)}>
+                {menuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
+          </div>
+
+          {/* Main Nav (Bottom of top section) */}
+          <nav className="hidden md:flex items-center gap-8 pb-5">
             {navLinks.map((item) => {
               const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
               return (
                 <Link key={item.label} href={item.href}
-                  onClick={() => setMenuOpen(false)}
-                  className={`text-sm font-bold tracking-widest uppercase py-2 border-b border-gray-100 ${
-                    isActive ? 'text-[#E8620A]' : 'text-gray-700 hover:text-[#E8620A]'
+                  className={`text-[13px] font-bold uppercase tracking-wider transition-colors ${
+                    isActive ? 'text-[#1C1C1C] border-b-2 border-[#1C1C1C] pb-1' : 'text-gray-600 hover:text-[#1C1C1C]'
                   }`}
                 >
                   {item.label}
                 </Link>
               );
             })}
-            <a
-              href="https://wa.me/97433513924"
-              className="mt-2 inline-flex items-center justify-center gap-2 bg-green-600 text-white text-xs font-bold py-3 px-6 rounded-full"
-            >
-              Chat on WhatsApp
-            </a>
           </nav>
         </div>
-      )}
-    </header>
+
+        {/* Sub Nav / Category Strip (Light Gray) */}
+        <div className="bg-[#F5F5F5] border-y border-gray-200 hidden md:block">
+          <div className="max-w-[1600px] mx-auto px-4 md:px-8">
+            <ul className="flex items-center gap-8 py-3 overflow-x-auto text-[13px] font-medium text-gray-700">
+              {subNavLinks.map((link, idx) => (
+                <li key={idx}>
+                  <Link 
+                    href={link.href} 
+                    className="whitespace-nowrap hover:text-black transition-colors capitalize"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {menuOpen && (
+          <div className="md:hidden border-t border-gray-100 bg-white shadow-xl absolute w-full left-0 top-full z-50">
+            <nav className="px-6 py-4 flex flex-col gap-4">
+              {navLinks.map((item) => (
+                <Link key={item.label} href={item.href} onClick={() => setMenuOpen(false)}
+                  className="text-[13px] font-bold tracking-widest uppercase py-2 border-b border-gray-100 text-gray-700"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+        )}
+      </header>
+
+      <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
+    </>
   );
 }

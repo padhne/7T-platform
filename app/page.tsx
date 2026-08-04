@@ -5,7 +5,7 @@ import AboutSection from '@/components/home/AboutSection';
 import CraftsmanshipSection from '@/components/home/CraftsmanshipSection';
 import MissionVisionSection from '@/components/home/MissionVisionSection';
 import PremiumFabricsSection from '@/components/home/PremiumFabricsSection';
-import CollectionsCatalog from '@/components/home/CollectionsCatalog';
+import ProductCategories from '@/components/home/ProductCategories';
 import AlterationsSection from '@/components/home/AlterationsSection';
 import ValuesSection from '@/components/home/ValuesSection';
 import ContactSection from '@/components/home/ContactSection';
@@ -23,19 +23,19 @@ export default function Home() {
       <AboutSection />
 
       {/* 4. Craftsmanship */}
-      <CraftsmanshipSection />
+      {/* <CraftsmanshipSection /> */}
 
       {/* 5. Mission & Vision */}
-      <MissionVisionSection />
+      {/* <MissionVisionSection /> */}
 
       {/* 6. Premium Fabrics */}
-      <PremiumFabricsSection />
+      {/* <PremiumFabricsSection /> */}
 
-      {/* 7. Uniform Collections (filterable) */}
-      <CollectionsCatalog />
+      {/* 7. Product Categories */}
+      <ProductCategories />
 
       {/* 8. Alterations */}
-      <AlterationsSection />
+      {/* <AlterationsSection /> */}
 
       {/* 9. Values */}
       <ValuesSection />

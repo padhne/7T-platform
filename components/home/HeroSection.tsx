@@ -18,81 +18,78 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="relative w-full min-h-[88vh] flex items-center overflow-hidden bg-[#1C1C1C]">
-      {/* Background Image with parallax */}
-      <div ref={imgRef} className="absolute inset-0 z-0 will-change-transform">
-        <img
-          src="/images/hero_bg.png"
-          alt="Professional corporate uniforms"
-          className="w-full h-full object-cover opacity-50 scale-110"
-          style={{ objectPosition: 'center 20%' }}
-        />
-      </div>
+    <div className="w-full flex flex-col bg-white">
+      <section className="relative w-full h-[600px] md:h-[750px] flex items-center justify-center overflow-hidden mx-auto max-w-[1920px]">
+        {/* Background Image with parallax */}
+        <div ref={imgRef} className="absolute inset-0 z-0 will-change-transform">
+          <img
+            src="/images/hero_bg.png"
+            alt="Professional corporate uniforms"
+            className="w-full h-full object-cover scale-110"
+            style={{ objectPosition: 'center 30%' }}
+          />
+        </div>
 
-      {/* Gradient overlays */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/85 via-black/60 to-transparent"></div>
-      <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+        {/* Gradient overlays */}
+        <div className="absolute inset-0 z-10 bg-black/40"></div>
 
-      {/* Orange accent vertical line */}
-      <div className="absolute left-0 top-0 h-full w-1.5 bg-[#E8620A] z-20"></div>
+        {/* Diagonal White Lines Overlay - to simulate the design */}
+        <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
+          {/* Top-left to bottom-right long line */}
+          <div className="absolute top-[-10%] left-[20%] w-[150%] h-3 bg-white transform rotate-[25deg] origin-top-left shadow-lg opacity-90"></div>
+          {/* Bottom-left to top-right line */}
+          <div className="absolute top-[110%] left-[-10%] w-[120%] h-4 bg-white transform -rotate-[35deg] origin-bottom-left shadow-lg opacity-95"></div>
+          {/* Smaller vertical-ish crossing line on left */}
+          <div className="absolute top-[-20%] left-[10%] w-4 h-[150%] bg-white transform -rotate-[25deg] shadow-lg opacity-95"></div>
+          {/* Top-right angled line */}
+          <div className="absolute top-[-10%] right-[10%] w-[80%] h-3 bg-white transform rotate-[45deg] origin-top-right shadow-lg opacity-95"></div>
+        </div>
 
-      {/* Content */}
-      <div className="relative z-20 w-full max-w-[1600px] mx-auto px-8 md:px-16 py-20">
-        <div className="max-w-3xl">
+        {/* Content (Centered) */}
+        <div className="relative z-30 w-full max-w-[1200px] mx-auto px-6 flex flex-col items-center text-center">
+          
+          <h3 className="text-sm md:text-base font-bold tracking-[0.2em] text-white uppercase mb-4 animate-fade-in-up">
+            Genuine Bespoke Tailoring & Online Orders
+          </h3>
 
-          {/* Logo watermark above heading */}
-          <div className="flex items-end leading-none mb-6 animate-fade-in-up">
-            <span className="text-[28px] font-black italic text-[#E8620A] leading-none" style={{ fontFamily: "'Playfair Display', serif" }}>7</span>
-            <span className="text-[28px] font-black italic text-white/60 leading-none" style={{ fontFamily: "'Playfair Display', serif" }}>T</span>
-            <span className="ml-3 text-[#E8620A] font-bold tracking-[0.28em] uppercase text-xs self-center">Tip Top Uniforms Trading</span>
-          </div>
-
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[1.05] mb-6 tracking-tight animate-fade-in-up animate-delay-100"
-            style={{ fontFamily: "'Playfair Display', serif" }}
+          <h1 className="text-5xl md:text-7xl lg:text-[85px] font-black text-white leading-[1.1] mb-6 tracking-tight animate-fade-in-up animate-delay-100 drop-shadow-lg"
+            style={{ fontFamily: "'Inter', sans-serif" }}
           >
-            Bespoke Uniforms.<br />
-            <span className="text-[#E8620A] italic">Tailored Excellence.</span>
+            BESPOKE UNIFORMS.<br />
+            TAILORED EXCELLENCE.
           </h1>
 
-          <p className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl font-light leading-relaxed animate-fade-in-up animate-delay-200">
+          <p className="text-base md:text-lg text-gray-100 mb-10 max-w-2xl font-medium animate-fade-in-up animate-delay-200 drop-shadow-md">
             We create genuine bespoke tailoring — timeless, made-to-measure garments crafted exclusively for every client, with the finest artisanal craftsmanship.
           </p>
 
-          <div className="flex flex-wrap gap-4 animate-fade-in-up animate-delay-300">
+          <div className="animate-fade-in-up animate-delay-300">
             <Link href="#collections"
-              className="bg-[#E8620A] hover:bg-[#CF5507] text-white font-bold py-4 px-9 transition-all duration-200 uppercase tracking-widest text-sm"
+              className="text-white font-bold text-sm border-b-2 border-white pb-1 hover:text-[#E8620A] hover:border-[#E8620A] transition-colors uppercase tracking-widest"
             >
-              Explore Our Collections
+              SHOP NOW
             </Link>
-            <Link href="#contact"
-              className="border-2 border-white/70 hover:border-[#E8620A] hover:text-[#E8620A] text-white font-bold py-4 px-9 transition-all duration-200 uppercase tracking-widest text-sm"
-            >
-              Contact Us
-            </Link>
-          </div>
-
-          {/* Stats bar */}
-          <div className="mt-16 flex flex-wrap gap-10 animate-fade-in-up animate-delay-400 border-t border-white/10 pt-10">
-            {[
-              { value: '22+', label: 'Years in Qatar' },
-              { value: '8', label: 'Uniform Categories' },
-              { value: '100%', label: 'In-House Tailoring' },
-              { value: '2', label: 'Mobile Numbers' },
-            ].map((stat) => (
-              <div key={stat.label} className="flex flex-col">
-                <span className="text-3xl font-black text-[#E8620A]">{stat.value}</span>
-                <span className="text-xs text-gray-400 uppercase tracking-widest mt-1">{stat.label}</span>
-              </div>
-            ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 animate-bounce">
-        <span className="text-[10px] text-gray-400 uppercase tracking-widest">Scroll</span>
-        <div className="w-px h-8 bg-gradient-to-b from-[#E8620A] to-transparent"></div>
+      {/* Hero Footer Bar */}
+      <div className="w-full max-w-[1600px] mx-auto px-4 md:px-8 py-6 flex flex-col md:flex-row items-center justify-between text-xs font-bold text-gray-600 tracking-widest uppercase">
+        <div>
+          TIP TOP UNIFORMS TRADING · DOHA, QATAR
+        </div>
+        <div className="flex items-center gap-3 mt-4 md:mt-0">
+          {/* Carousel indicators simulation */}
+          <div className="w-8 h-0.5 bg-gray-300 rounded-full"></div>
+          <div className="w-8 h-0.5 bg-gray-200 rounded-full"></div>
+          <div className="w-8 h-0.5 bg-gray-200 rounded-full"></div>
+        </div>
+        <div className="flex items-center gap-4 mt-4 md:mt-0">
+          <span>FOLLOW US</span>
+          <Link href="#" className="hover:text-black transition-colors">f</Link>
+          <Link href="#" className="hover:text-black transition-colors">in</Link>
+        </div>
       </div>
-    </section>
+    </div>
   );
 }
