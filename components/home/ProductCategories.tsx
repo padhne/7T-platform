@@ -1,8 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
+import { connection } from 'next/server';
 import { supabase } from '@/lib/supabase/client';
 
 export default async function ProductCategories() {
+  // Opt out of static prerendering — always fetch fresh data on every request
+  await connection();
+
   // Fetch categories
   const { data: categoriesData } = await supabase
     .from('categories')
