@@ -149,13 +149,44 @@ export default function DashboardPage() {
   }
 
   async function handleDeleteCategory(id: string) {
-    if (!confirm('Are you sure you want to delete this category? All related images will be affected.')) return;
+    if (!confirm('Are you sure you want to delete this category and ALL its images? This cannot be undone.')) return;
 
     try {
+      // 1. Get all images belonging to this category
+      const categoryImages = images.filter(i => i.category_id === id);
+
+      // 2. Delete each image file from Supabase Storage
+      if (categoryImages.length > 0) {
+        const storagePaths = categoryImages
+          .map(img => {
+            // Extract the path after the bucket name in the public URL
+            // URL format: .../storage/v1/object/public/images/<path>
+            const match = img.image_url.match(/\/storage\/v1\/object\/public\/images\/(.+)/);
+            return match ? match[1] : null;
+          })
+          .filter(Boolean) as string[];
+
+        if (storagePaths.length > 0) {
+          const { error: storageError } = await supabase.storage
+            .from('images')
+            .remove(storagePaths);
+          if (storageError) console.error('Storage delete error:', storageError);
+        }
+      }
+
+      // 3. Delete all category_images DB records for this category
+      const { error: imagesDbError } = await supabase
+        .from('category_images')
+        .delete()
+        .eq('category_id', id);
+      if (imagesDbError) throw imagesDbError;
+
+      // 4. Delete the category itself
       const { error } = await supabase.from('categories').delete().eq('id', id);
       if (error) throw error;
+
+      // 5. Update local state
       setCategories(categories.filter(c => c.id !== id));
-      // Also remove images locally to reflect DB cascade (if setup) or cleanup
       setImages(images.filter(i => i.category_id !== id));
     } catch (err: any) {
       setError(err.message || 'Failed to delete category');
@@ -166,12 +197,21 @@ export default function DashboardPage() {
     if (!confirm('Are you sure you want to delete this image?')) return;
 
     try {
-      // We could also delete from storage here, but for simplicity we'll just delete the DB record
+      // 1. Extract the storage path from the public URL and delete from storage
+      const match = imageUrl.match(/\/storage\/v1\/object\/public\/images\/(.+)/);
+      if (match && match[1]) {
+        const { error: storageError } = await supabase.storage
+          .from('images')
+          .remove([match[1]]);
+        if (storageError) console.error('Storage delete error:', storageError);
+      }
+
+      // 2. Delete the DB record
       const { error } = await supabase.from('category_images').delete().eq('id', id);
       if (error) throw error;
       setImages(images.filter(i => i.id !== id));
     } catch (err: any) {
-      setError(err.message || 'Failed to delete image record');
+      setError(err.message || 'Failed to delete image');
     }
   }
 
