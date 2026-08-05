@@ -18,15 +18,16 @@ export default async function ProductCategories() {
     .from('category_images')
     .select('*');
 
-  // Build a mapped array of categories with their first available image
+  // Build a mapped array of categories with their first available image (or cover image)
   // We explicitly filter OUT categories that have no images
   const displayCategories = (categoriesData || [])
     .map(cat => {
       const catImages = (imagesData || []).filter(img => img.category_id === cat.id);
       return {
         id: cat.id,
+        slug: cat.slug,
         title: cat.name,
-        image: catImages.length > 0 ? catImages[0].image_url : null
+        image: cat.cover_image_url || (catImages.length > 0 ? catImages[0].image_url : null)
       };
     })
     .filter(cat => cat.image !== null);
@@ -57,7 +58,7 @@ export default async function ProductCategories() {
           {displayCategories.map((cat, index) => (
             <Link 
               key={index} 
-              href={`/collections/${cat.id}`} 
+              href={`/collections/${cat.slug || cat.id}`} 
               className="relative group overflow-hidden bg-gray-100 aspect-[3/4] flex items-end justify-center"
             >
               <img 

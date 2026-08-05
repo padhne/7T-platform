@@ -5,13 +5,13 @@ import { Phone, Mail, MapPin, MessageCircle } from 'lucide-react';
 import { supabase } from '@/lib/supabase/client';
 
 export default function Footer() {
-  const [categories, setCategories] = useState<{id: string, name: string}[]>([]);
+  const [categories, setCategories] = useState<{id: string, name: string, slug?: string}[]>([]);
   const [settings, setSettings] = useState<any>(null);
 
   useEffect(() => {
     async function fetchData() {
       const [catsRes, settingsRes] = await Promise.all([
-        supabase.from('categories').select('id, name').order('created_at', { ascending: false }),
+        supabase.from('categories').select('id, name, slug').order('created_at', { ascending: false }),
         supabase.from('site_settings').select('*').eq('id', 1).single()
       ]);
       if (catsRes.data) setCategories(catsRes.data);
@@ -89,7 +89,7 @@ export default function Footer() {
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-8 text-sm text-gray-400">
               {categories.map((cat) => (
                 <li key={cat.id}>
-                  <Link href={`/collections/${cat.id}`} className="hover:text-[#E8620A] transition-colors flex items-center gap-2">
+                  <Link href={`/collections/${cat.slug || cat.id}`} className="hover:text-[#E8620A] transition-colors flex items-center gap-2">
                     <span className="w-4 h-px bg-[#E8620A]/50 inline-block"></span>
                     {cat.name}
                   </Link>

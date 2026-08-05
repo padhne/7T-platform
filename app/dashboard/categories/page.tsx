@@ -2,12 +2,14 @@
 
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase/client';
-import { Upload, Plus, Loader2, Image as ImageIcon, FolderPlus, Trash2, Edit2, Check, X } from 'lucide-react';
+import { Upload, Plus, Loader2, Image as ImageIcon, FolderPlus, Trash2, Edit2, Check, X, Star } from 'lucide-react';
 
 interface Category {
   id: string;
   name: string;
   created_at: string;
+  cover_image_url?: string;
+  slug?: string;
 }
 
 interface CategoryImage {
@@ -15,6 +17,7 @@ interface CategoryImage {
   category_id: string;
   image_url: string;
   created_at: string;
+  image_name?: string;
 }
 
 export default function DashboardPage() {
@@ -30,6 +33,7 @@ export default function DashboardPage() {
   // Image upload state
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [uploadImageName, setUploadImageName] = useState('');
   const [isUploading, setIsUploading] = useState(false);
 
   // Edit state
@@ -38,15 +42,27 @@ export default function DashboardPage() {
 
   const [editingImageId, setEditingImageId] = useState<string | null>(null);
   const [editImageCategoryId, setEditImageCategoryId] = useState('');
+  const [editImageName, setEditImageName] = useState('');
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
+  const [totalImages, setTotalImages] = useState(0);
+
+  // Derived state for images
+  const totalPages = Math.ceil(totalImages / itemsPerPage);
 
   useEffect(() => {
-    fetchData();
+    fetchCategories();
   }, []);
 
-  async function fetchData() {
+  useEffect(() => {
+    fetchImages(currentPage);
+  }, [currentPage]);
+
+  async function fetchCategories() {
     setLoading(true);
     try {
-      // Fetch categories
       const { data: categoriesData, error: categoriesError } = await supabase
         .from('categories')
         .select('*')
@@ -54,22 +70,41 @@ export default function DashboardPage() {
 
       if (categoriesError) throw categoriesError;
       setCategories(categoriesData || []);
-
-      // Fetch images
-      const { data: imagesData, error: imagesError } = await supabase
-        .from('category_images')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (imagesError) throw imagesError;
-      setImages(imagesData || []);
-
     } catch (err: any) {
-      console.error('Error fetching data:', err);
-      setError(err.message || 'Failed to load data. Make sure your database tables are created.');
+      console.error('Error fetching categories:', err);
+      setError(err.message || 'Failed to load categories.');
     } finally {
       setLoading(false);
     }
+  }
+
+  async function fetchImages(page: number) {
+    try {
+      const from = (page - 1) * itemsPerPage;
+      const to = from + itemsPerPage - 1;
+
+      const { data: imagesData, count, error: imagesError } = await supabase
+        .from('category_images')
+        .select('*', { count: 'exact' })
+        .order('created_at', { ascending: false })
+        .range(from, to);
+
+      if (imagesError) throw imagesError;
+      setImages(imagesData || []);
+      if (count !== null) setTotalImages(count);
+    } catch (err: any) {
+      console.error('Error fetching images:', err);
+      setError(err.message || 'Failed to load images.');
+    }
+  }
+
+  function generateSlug(text: string) {
+    return text
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, '') // Remove non-word chars
+      .replace(/[\s_-]+/g, '-') // Swap spaces and underscores for hyphens
+      .replace(/^-+|-+$/g, ''); // Remove trailing/leading hyphens
   }
 
   async function handleAddCategory(e: React.FormEvent) {
@@ -79,13 +114,20 @@ export default function DashboardPage() {
     setIsAddingCategory(true);
     setError(null);
 
+    const slug = generateSlug(newCategoryName);
+
     try {
       const { data, error } = await supabase
         .from('categories')
-        .insert([{ name: newCategoryName.trim() }])
+        .insert([{ name: newCategoryName.trim(), slug }])
         .select();
 
-      if (error) throw error;
+      if (error) {
+        if (error.message.includes('slug')) {
+          throw new Error('Please add a "slug" column (Type: text, Unique) to your "categories" table in Supabase.');
+        }
+        throw error;
+      }
 
       if (data) {
         setCategories([data[0], ...categories]);
@@ -126,16 +168,31 @@ export default function DashboardPage() {
         .getPublicUrl(filePath);
 
       // 3. Save to database
+      const insertPayload: any = { category_id: selectedCategoryId, image_url: publicUrl };
+      if (uploadImageName.trim()) {
+        insertPayload.image_name = uploadImageName.trim();
+      }
+
       const { data: insertData, error: insertError } = await supabase
         .from('category_images')
-        .insert([{ category_id: selectedCategoryId, image_url: publicUrl }])
+        .insert([insertPayload])
         .select();
 
-      if (insertError) throw insertError;
+      if (insertError) {
+        if (insertError.message.includes('image_name')) {
+          throw new Error('Please add an "image_name" column (Type: text) to your "category_images" table in Supabase to use this feature.');
+        }
+        throw insertError;
+      }
 
       if (insertData) {
-        setImages([insertData[0], ...images]);
+        if (currentPage === 1) {
+          fetchImages(1);
+        } else {
+          setCurrentPage(1);
+        }
         setSelectedFile(null);
+        setUploadImageName('');
         // Reset file input (hacky but works without ref for simplicity)
         const fileInput = document.getElementById('image-upload') as HTMLInputElement;
         if (fileInput) fileInput.value = '';
@@ -153,10 +210,13 @@ export default function DashboardPage() {
 
     try {
       // 1. Get all images belonging to this category
-      const categoryImages = images.filter(i => i.category_id === id);
+      const { data: categoryImages } = await supabase
+        .from('category_images')
+        .select('*')
+        .eq('category_id', id);
 
       // 2. Delete each image file from Supabase Storage
-      if (categoryImages.length > 0) {
+      if (categoryImages && categoryImages.length > 0) {
         const storagePaths = categoryImages
           .map(img => {
             // Extract the path after the bucket name in the public URL
@@ -187,7 +247,7 @@ export default function DashboardPage() {
 
       // 5. Update local state
       setCategories(categories.filter(c => c.id !== id));
-      setImages(images.filter(i => i.category_id !== id));
+      fetchImages(currentPage);
     } catch (err: any) {
       setError(err.message || 'Failed to delete category');
     }
@@ -209,7 +269,7 @@ export default function DashboardPage() {
       // 2. Delete the DB record
       const { error } = await supabase.from('category_images').delete().eq('id', id);
       if (error) throw error;
-      setImages(images.filter(i => i.id !== id));
+      fetchImages(currentPage);
     } catch (err: any) {
       setError(err.message || 'Failed to delete image');
     }
@@ -217,31 +277,62 @@ export default function DashboardPage() {
 
   async function handleUpdateCategory(id: string) {
     if (!editCategoryName.trim()) return;
+    const slug = generateSlug(editCategoryName);
+
     try {
       const { error } = await supabase
         .from('categories')
-        .update({ name: editCategoryName.trim() })
+        .update({ name: editCategoryName.trim(), slug })
         .eq('id', id);
-      if (error) throw error;
-      setCategories(categories.map(c => c.id === id ? { ...c, name: editCategoryName.trim() } : c));
+      if (error) {
+        if (error.message.includes('slug')) {
+          throw new Error('Please add a "slug" column (Type: text, Unique) to your "categories" table in Supabase.');
+        }
+        throw error;
+      }
+      setCategories(categories.map(c => c.id === id ? { ...c, name: editCategoryName.trim(), slug } : c));
       setEditingCategoryId(null);
     } catch (err: any) {
       setError(err.message || 'Failed to update category');
     }
   }
 
-  async function handleUpdateImageCategory(id: string) {
-    if (!editImageCategoryId) return;
+  async function handleSetCoverImage(categoryId: string, imageUrl: string) {
     try {
       const { error } = await supabase
+        .from('categories')
+        .update({ cover_image_url: imageUrl })
+        .eq('id', categoryId);
+
+      if (error) {
+        if (error.message.includes('cover_image_url')) {
+          setError('Please add a "cover_image_url" column (Type: text) to your "categories" table in Supabase to use this feature.');
+        } else {
+          throw error;
+        }
+      } else {
+        setCategories(categories.map(c => c.id === categoryId ? { ...c, cover_image_url: imageUrl } : c));
+      }
+    } catch (err: any) {
+      setError(err.message || 'Failed to set cover image');
+    }
+  }
+
+  async function handleUpdateImage(id: string) {
+    if (!editImageCategoryId) return;
+    try {
+      const payload: any = { category_id: editImageCategoryId };
+      payload.image_name = editImageName.trim() || null; // null deletes/clears the name
+
+      const { error } = await supabase
         .from('category_images')
-        .update({ category_id: editImageCategoryId })
+        .update(payload)
         .eq('id', id);
       if (error) throw error;
-      setImages(images.map(i => i.id === id ? { ...i, category_id: editImageCategoryId } : i));
+      setImages(images.map(i => i.id === id ? { ...i, category_id: editImageCategoryId, image_name: payload.image_name } : i));
       setEditingImageId(null);
     } catch (err: any) {
-      setError(err.message || 'Failed to update image category');
+      setError(err.message || 'Failed to update image');
     }
   }
 
@@ -427,6 +518,18 @@ export default function DashboardPage() {
                 </div>
               </div>
 
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Image Name (Optional)</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Premium Corporate Shirt"
+                  value={uploadImageName}
+                  onChange={(e) => setUploadImageName(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                  disabled={isUploading}
+                />
+              </div>
+
               <button
                 type="submit"
                 disabled={isUploading || !selectedCategoryId || !selectedFile}
@@ -456,7 +559,9 @@ export default function DashboardPage() {
             <h2 className="text-xl font-semibold text-gray-800">Uploaded Images</h2>
           </div>
           <span className="bg-gray-100 text-gray-700 py-1 px-3 rounded-full text-sm font-medium">
-            {images.length} Total
+            {totalImages === 0 
+              ? '0 Total' 
+              : `Showing ${(currentPage - 1) * itemsPerPage + 1}-${Math.min(currentPage * itemsPerPage, totalImages)} of ${totalImages}`}
           </span>
         </div>
 
@@ -467,56 +572,115 @@ export default function DashboardPage() {
               <p className="text-gray-500">No images uploaded yet.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {images.map((image) => {
-                const category = categories.find(c => c.id === image.category_id);
-                return (
-                  <div key={image.id} className="group relative rounded-xl overflow-hidden border border-gray-200 bg-gray-50 aspect-square">
-                    <img
-                      src={image.image_url}
-                      alt={`Category: ${category?.name || 'Unknown'}`}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-between p-3">
-                      <div className="flex justify-end gap-1">
-                        <button
-                          onClick={() => { setEditingImageId(image.id); setEditImageCategoryId(image.category_id); }}
-                          className="p-1.5 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors shadow-sm"
-                          title="Change Category"
-                        >
-                          <Edit2 className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={() => handleDeleteImage(image.id, image.image_url)}
-                          className="p-1.5 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors shadow-sm"
-                          title="Delete Image"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                      
-                      {editingImageId === image.id ? (
-                        <div className="bg-white p-2 rounded-lg text-xs flex gap-1 shadow-sm mt-auto">
-                           <select 
-                             value={editImageCategoryId} 
-                             onChange={(e) => setEditImageCategoryId(e.target.value)}
-                             className="flex-1 w-full border border-gray-300 rounded text-xs p-1 outline-none"
-                           >
-                             {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-                           </select>
-                           <button onClick={() => handleUpdateImageCategory(image.id)} className="text-green-600 hover:text-green-700 p-1 bg-gray-100 rounded"><Check className="w-3 h-3" /></button>
-                           <button onClick={() => setEditingImageId(null)} className="text-red-600 hover:text-red-700 p-1 bg-gray-100 rounded"><X className="w-3 h-3" /></button>
-                        </div>
-                      ) : (
-                        <div className="bg-white/90 backdrop-blur-sm p-2 rounded-lg text-xs font-medium text-gray-800 shadow-sm truncate mt-auto">
-                          {category?.name || 'Unknown Category'}
+            <>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {images.map((image) => {
+                  const category = categories.find(c => c.id === image.category_id);
+                  const isCover = category?.cover_image_url === image.image_url;
+
+                  return (
+                    <div key={image.id} className={`group relative rounded-xl overflow-hidden border ${isCover ? 'border-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.5)]' : 'border-gray-200'} bg-gray-50 aspect-square`}>
+                      <img
+                        src={image.image_url}
+                        alt={`Category: ${category?.name || 'Unknown'}`}
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+
+                      {isCover && (
+                        <div className="absolute top-2 left-2 bg-yellow-400 text-yellow-900 text-[10px] font-bold px-2 py-1 rounded-md flex items-center shadow-sm z-10">
+                          <Star className="w-3 h-3 mr-1 fill-yellow-900" /> Cover
                         </div>
                       )}
+
+                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-between p-3 z-20">
+                        <div className="flex justify-end gap-1 flex-wrap">
+                          {category && !isCover && (
+                            <button
+                              onClick={() => handleSetCoverImage(category.id, image.image_url)}
+                              className="p-1.5 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-colors shadow-sm"
+                              title="Set as Cover Image"
+                            >
+                              <Star className="w-4 h-4" />
+                            </button>
+                          )}
+                          <button
+                            onClick={() => {
+                              setEditingImageId(image.id);
+                              setEditImageCategoryId(image.category_id);
+                              setEditImageName(image.image_name || '');
+                            }}
+                            className="p-1.5 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors shadow-sm"
+                            title="Edit Image"
+                          >
+                            <Edit2 className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteImage(image.id, image.image_url)}
+                            className="p-1.5 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors shadow-sm"
+                            title="Delete Image"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+
+                        {editingImageId === image.id ? (
+                          <div className="bg-white p-2 rounded-lg text-xs flex flex-col gap-2 shadow-sm mt-auto">
+                            <input
+                              type="text"
+                              placeholder="Image Name"
+                              value={editImageName}
+                              onChange={(e) => setEditImageName(e.target.value)}
+                              className="w-full border border-gray-300 rounded text-xs p-1 outline-none"
+                            />
+                            <div className="flex gap-1">
+                              <select
+                                value={editImageCategoryId}
+                                onChange={(e) => setEditImageCategoryId(e.target.value)}
+                                className="flex-1 w-full border border-gray-300 rounded text-xs p-1 outline-none"
+                              >
+                                {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                              </select>
+                              <button onClick={() => handleUpdateImage(image.id)} className="text-green-600 hover:text-green-700 p-1 bg-gray-100 rounded"><Check className="w-3 h-3" /></button>
+                              <button onClick={() => setEditingImageId(null)} className="text-red-600 hover:text-red-700 p-1 bg-gray-100 rounded"><X className="w-3 h-3" /></button>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="bg-white/90 backdrop-blur-sm p-2 rounded-lg text-xs font-medium text-gray-800 shadow-sm truncate mt-auto">
+                            {image.image_name ? (
+                              <span className="font-bold">{image.image_name}</span>
+                            ) : (
+                              <span>{category?.name || 'Unknown Category'}</span>
+                            )}
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+
+              {totalPages > 1 && (
+                <div className="flex justify-center items-center gap-2 mt-8">
+                  <button
+                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                    disabled={currentPage === 1}
+                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    Previous
+                  </button>
+                  <span className="text-sm text-gray-600 font-medium px-4">
+                    Page {currentPage} of {totalPages}
+                  </span>
+                  <button
+                    onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                    disabled={currentPage === totalPages}
+                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
