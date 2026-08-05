@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Search, User, ShoppingBag, Menu, X, Home, Grid, Phone } from 'lucide-react';
-import { uniformCategories } from '@/data/collections';
 import AuthModal from '@/components/AuthModal';
+import { supabase } from '@/lib/supabase/client';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -13,9 +13,30 @@ export default function Header() {
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const pathname = usePathname();
 
+  const [subNavLinks, setSubNavLinks] = useState<{label: string, href: string}[]>([]);
+  const [settings, setSettings] = useState<any>(null);
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
+    // Fetch categories and settings
+    const fetchData = async () => {
+      const [catsRes, settingsRes] = await Promise.all([
+        supabase.from('categories').select('id, name').order('created_at', { ascending: false }),
+        supabase.from('site_settings').select('phone1').eq('id', 1).single()
+      ]);
+      if (catsRes.data) {
+        setSubNavLinks(catsRes.data.map((cat: any) => ({
+          label: cat.name,
+          href: `/collections/${cat.id}`
+        })));
+      }
+      if (settingsRes.data) {
+        setSettings(settingsRes.data);
+      }
+    };
+    fetchData();
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -26,14 +47,7 @@ export default function Header() {
     { label: 'CONTACT', href: '/contact' },
   ];
 
-  const subNavLinks = [
-    { label: 'Aprons', href: '/collections/aprons' },
-    { label: 'Tops', href: '/collections/tops' },
-    { label: 'Bottoms', href: '/collections/bottoms' },
-    { label: 'Chef', href: '/collections/chef' },
-    { label: 'Suiting', href: '/collections/suiting' },
-    { label: 'Products', href: '/collections' },
-  ];
+  // subNavLinks is now state
 
   return (
     <>
@@ -57,8 +71,8 @@ export default function Header() {
 
             {/* Middle Info (Phone & Search) */}
             <div className="hidden md:flex items-center gap-6">
-              <a href="tel:+97455016644" className="text-[13px] font-medium text-[#1C1C1C] hover:text-[#8B1A3B] transition-colors">
-                +974 5501 6644
+              <a href={`tel:${(settings?.phone1 || '+974 5501 6644').replace(/[^\d+]/g, '')}`} className="text-[13px] font-medium text-[#1C1C1C] hover:text-[#8B1A3B] transition-colors">
+                {settings?.phone1 || '+974 5501 6644'}
               </a>
               <button className="text-gray-900 hover:text-[#8B1A3B] transition-colors" aria-label="Search">
                 <Search size={20} strokeWidth={1.5} />

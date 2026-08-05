@@ -1,8 +1,19 @@
 'use client';
-import React from 'react';
-
+import React, { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase/client';
 
 export default function AboutSection() {
+  const [aboutImage, setAboutImage] = useState('/images/about_tailor.png');
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      const { data } = await supabase.from('site_settings').select('about_image').eq('id', 1).single();
+      if (data?.about_image) {
+        setAboutImage(data.about_image);
+      }
+    };
+    fetchSettings();
+  }, []);
   return (
     <section id="about" className="py-28 bg-white w-full">
       <div className="max-w-[1600px] mx-auto px-4 md:px-16">
@@ -12,7 +23,7 @@ export default function AboutSection() {
           <div className="relative">
             <div className="relative h-[580px] w-full overflow-hidden">
               <img
-                src="/images/about_tailor.png"
+                src={aboutImage}
                 alt="Tailor buttoning a cufflink — bespoke luxury tailoring"
                 className="w-full h-full object-cover"
               />

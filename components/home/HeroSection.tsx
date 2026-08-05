@@ -1,10 +1,12 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { supabase } from '@/lib/supabase/client';
 
 export default function HeroSection() {
   const imgRef = useRef<HTMLDivElement>(null);
+  const [heroImage, setHeroImage] = useState('/images/hero_bg.png');
 
   // Subtle parallax on scroll
   useEffect(() => {
@@ -14,6 +16,16 @@ export default function HeroSection() {
       }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Fetch hero image setting
+    const fetchSettings = async () => {
+      const { data } = await supabase.from('site_settings').select('hero_image').eq('id', 1).single();
+      if (data?.hero_image) {
+        setHeroImage(data.hero_image);
+      }
+    };
+    fetchSettings();
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -23,7 +35,7 @@ export default function HeroSection() {
         {/* Background Image with parallax */}
         <div ref={imgRef} className="absolute inset-0 z-0 will-change-transform">
           <img
-            src="/images/hero_bg.png"
+            src={heroImage}
             alt="Professional corporate uniforms"
             className="w-full h-full object-cover scale-110"
             style={{ objectPosition: 'center 30%' }}

@@ -1,7 +1,20 @@
-import React from 'react';
+'use client';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { supabase } from '@/lib/supabase/client';
 
 export default function ValuesSection() {
+  const [bannerImage, setBannerImage] = useState('https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1600&q=80');
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      const { data } = await supabase.from('site_settings').select('values_banner_image').eq('id', 1).single();
+      if (data?.values_banner_image) {
+        setBannerImage(data.values_banner_image);
+      }
+    };
+    fetchSettings();
+  }, []);
   const clientLogos = Array.from({ length: 16 }).map((_, i) => `/images/client_${i + 1}.png`); // Using placeholder paths for logos
 
   return (
@@ -10,7 +23,7 @@ export default function ValuesSection() {
       {/* 1. Large Banner with 3 Men */}
       <div className="relative w-full h-[500px] overflow-hidden bg-gray-200">
         <img
-          src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1600&q=80"
+          src={bannerImage}
           alt="Honesty and Sustainability"
           className="w-full h-full object-cover object-top"
         />

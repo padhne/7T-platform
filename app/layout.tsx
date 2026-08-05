@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Lato, Barlow_Condensed } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import { ConditionalHeader, ConditionalFooter } from "@/components/ClientLayoutWrapper";
 
 const lato = Lato({
   variable: "--font-sans",
@@ -29,11 +28,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${lato.variable} ${barlowCondensed.variable} antialiased h-full `} data-scroll-behavior="smooth">
       <body className="min-h-full flex flex-col font-sans bg-background text-foreground pb-16 md:pb-0">
-        <Header />
+        <ConditionalHeader />
         <main className="flex-1 w-full flex flex-col">
           {children}
         </main>
-        <Footer />
+        <ConditionalFooter />
       </body>
     </html>
   );
