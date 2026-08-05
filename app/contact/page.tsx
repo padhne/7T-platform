@@ -1,4 +1,18 @@
 import React from 'react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Contact',
+  description:
+    'Get in touch with Tip Top Uniforms Trading W.L.L. Visit us at Shop No. F-62, Al Jaher Center, Doha, Qatar, or call +974 5501 6644.',
+  alternates: { canonical: '/contact' },
+  openGraph: {
+    title: 'Contact | Tip Top Uniforms Trading',
+    description:
+      'Reach Tip Top Uniforms Trading — Shop No. F-62, Al Jaher Center, Doha, Qatar. Phone & WhatsApp: +974 5501 6644.',
+    url: 'https://tiptopuniforms.com/contact',
+  },
+};
 
 export default function ContactPage() {
   return (

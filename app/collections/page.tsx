@@ -1,6 +1,21 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import CollectionsCatalog from '@/components/home/CollectionsCatalog';
 import ProductCategories from '@/components/home/ProductCategories';
+
+export const metadata: Metadata = {
+  title: 'Collections',
+  description:
+    'Browse all Tip Top Uniforms Trading collections — corporate, hospitality, school, industrial, and more. Premium fabrics, bespoke tailoring.',
+  alternates: { canonical: '/collections' },
+  openGraph: {
+    title: 'Collections | Tip Top Uniforms Trading',
+    description:
+      'Browse all uniform collections — corporate, hospitality, school, industrial, and more. Premium fabrics, bespoke tailoring.',
+    url: 'https://tiptopuniforms.com/collections',
+  },
+};
+
 
 export default function CollectionsPage() {
   return (

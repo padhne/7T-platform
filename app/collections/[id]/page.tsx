@@ -1,7 +1,35 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import { supabase } from '@/lib/supabase/client';
 import { ProductCard } from '@/components/home/CollectionsClient';
 import ProductCategories from '@/components/home/ProductCategories';
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ id: string }> }
+): Promise<Metadata> {
+  const { id } = await params;
+  const { data: category } = await supabase
+    .from('categories')
+    .select('name')
+    .eq('id', id)
+    .single();
+
+  const name = category?.name
+    ? category.name
+    : id.charAt(0).toUpperCase() + id.slice(1).replace(/-/g, ' ');
+
+  return {
+    title: name,
+    description: `Shop ${name} uniforms from Tip Top Uniforms Trading — premium bespoke tailoring in Doha, Qatar.`,
+    alternates: { canonical: `/collections/${id}` },
+    openGraph: {
+      title: `${name} | Tip Top Uniforms Trading`,
+      description: `Shop ${name} uniforms from Tip Top Uniforms Trading — bespoke, made-to-measure in Doha, Qatar.`,
+      url: `https://tiptopuniforms.com/collections/${id}`,
+    },
+  };
+}
+
 
 function BasicProductCard({ item, categoryLabel }: { item: { img: string, title: string }, categoryLabel: string }) {
   return (
