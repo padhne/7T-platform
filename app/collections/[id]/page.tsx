@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { connection } from 'next/server';
 import { supabase } from '@/lib/supabase/client';
 import { ProductCard } from '@/components/home/CollectionsClient';
 import ProductCategories from '@/components/home/ProductCategories';
@@ -8,10 +9,14 @@ export async function generateMetadata(
   { params }: { params: Promise<{ id: string }> }
 ): Promise<Metadata> {
   const { id } = await params;
+  
+  const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+  const column = isUUID ? 'id' : 'slug';
+
   const { data: category } = await supabase
     .from('categories')
     .select('name')
-    .eq('id', id)
+    .eq(column, id)
     .single();
 
   const name = category?.name
@@ -43,7 +48,7 @@ function BasicProductCard({ item, categoryLabel }: { item: { img: string, title:
       </div>
       <div className="p-5 text-center bg-white">
         <h3 className="text-[#1C1C1C] font-bold uppercase tracking-widest text-[13px] mb-1.5">
-          {categoryLabel}
+          {item.title}
         </h3>
         <p className="text-gray-400 text-xs font-medium uppercase tracking-wider">
           Made in Qatar
@@ -54,13 +59,17 @@ function BasicProductCard({ item, categoryLabel }: { item: { img: string, title:
 }
 
 export default async function CollectionCategoryPage({ params }: { params: Promise<{ id: string }> }) {
+  await connection();
   const resolvedParams = await params;
   
   // Fetch the specific category
+  const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(resolvedParams.id);
+  const column = isUUID ? 'id' : 'slug';
+
   const { data: categoryData } = await supabase
     .from('categories')
     .select('*')
-    .eq('id', resolvedParams.id)
+    .eq(column, resolvedParams.id)
     .single();
 
   const displayName = categoryData 
@@ -76,7 +85,7 @@ export default async function CollectionCategoryPage({ params }: { params: Promi
   const items = (imagesData || []).map(img => ({
     id: img.id,
     img: img.image_url,
-    title: categoryData?.name || 'Unknown',
+    title: img.image_name || categoryData?.name || 'Unknown',
     desc: ''
   }));
 
