@@ -21,7 +21,7 @@ export default function ContactPage() {
         
         {/* Main Header */}
         <h1 className="text-4xl md:text-5xl font-black text-[#4B525A] mb-6" style={{ fontFamily: "'Lato', sans-serif" }}>
-          Get in touch
+          Contact Us
         </h1>
         
         {/* Thick divider */}

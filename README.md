@@ -2,6 +2,16 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+### Configure Supabase
+
+Create a Supabase project, then copy its Project URL and public anon/publishable key from the project API settings into `.env.local`. Start from the example:
+
+```powershell
+Copy-Item .env.example .env.local
+```
+
+Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in `.env.local` (or use `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` instead of the anon key). These `NEXT_PUBLIC_` values are exposed to the browser; do not put a service-role key here. Restart the development server after changing them.
+
 First, run the development server:
 
 ```bash

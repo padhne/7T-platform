@@ -20,10 +20,10 @@ export type DynamicCategory = {
 export function ProductCard({ item, categoryLabel }: { item: DynamicUniformItem; categoryLabel: string }) {
   return (
     <div
-      className="group relative flex flex-col bg-[#242424] border border-[#333] overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:border-[#E8620A]/60 hover:shadow-[0_20px_60px_rgba(232,98,10,0.15)]"
+      className="group relative flex flex-col bg-[#242424] border border-[#333] overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:border-[#FF6200]/60 hover:shadow-[0_20px_60px_rgba(232,98,10,0.15)]"
       style={{ borderRadius: 2 }}
     >
-      <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#E8620A] to-[#CF5507] z-10" />
+      <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#FF6200] to-[#E05700] z-10" />
 
       <div className="relative w-full bg-[#1a1a1a] overflow-hidden" style={{ height: 260 }}>
         <img
@@ -31,17 +31,17 @@ export function ProductCard({ item, categoryLabel }: { item: DynamicUniformItem;
           alt={item.title}
           className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
         />
-        <span className="absolute top-4 left-4 px-3 py-1 text-[10px] font-bold uppercase tracking-widest bg-[#E8620A] text-white z-10">
+        <span className="absolute top-4 left-4 px-3 py-1 text-[10px] font-bold uppercase tracking-widest bg-[#FF6200] text-white z-10">
           {categoryLabel}
         </span>
       </div>
 
       <div className="flex flex-col flex-1 p-6">
-        <h3 className="text-white font-black text-sm uppercase tracking-widest mb-3 group-hover:text-[#E8620A] transition-colors duration-200">
+        <h3 className="text-white font-black text-sm uppercase tracking-widest mb-3 group-hover:text-[#FF6200] transition-colors duration-200">
           {item.title}
         </h3>
 
-        <div className="w-8 h-[2px] bg-[#E8620A] mb-4" />
+        <div className="w-8 h-[2px] bg-[#FF6200] mb-4" />
 
         <p className="text-gray-400 text-sm leading-relaxed font-light flex-1 mb-6">
           {item.desc || 'Premium quality uniform designed for comfort and durability.'}
@@ -51,7 +51,7 @@ export function ProductCard({ item, categoryLabel }: { item: DynamicUniformItem;
           href="https://wa.me/97433513924?text=Hello!%20I%20am%20interested%20in%20your%20uniforms."
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-[#E8620A] border border-[#E8620A]/40 px-4 py-2.5 w-fit transition-all duration-200 hover:bg-[#E8620A] hover:text-white hover:border-[#E8620A]"
+          className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-[#FF6200] border border-[#FF6200]/40 px-4 py-2.5 w-fit transition-all duration-200 hover:bg-[#FF6200] hover:text-white hover:border-[#FF6200]"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
@@ -85,8 +85,8 @@ export default function CollectionsClient({ categories }: { categories: DynamicC
               onClick={() => setActive(cat.id)}
               className={`px-6 py-2.5 text-xs font-bold uppercase tracking-widest border transition-all duration-200 ${
                 active === cat.id
-                  ? 'bg-[#E8620A] border-[#E8620A] text-white'
-                  : 'bg-transparent border-gray-600 text-gray-400 hover:border-[#E8620A] hover:text-[#E8620A]'
+                  ? 'bg-[#FF6200] border-[#FF6200] text-white'
+                  : 'bg-transparent border-gray-600 text-gray-400 hover:border-[#FF6200] hover:text-[#FF6200]'
               }`}
             >
               {cat.label}
@@ -110,7 +110,7 @@ export default function CollectionsClient({ categories }: { categories: DynamicC
               clipPath: 'polygon(12px 0%, 100% 0%, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0% 100%, 0% 12px)',
             }}
           >
-            <span style={{ color: '#E8620A', fontFamily: "'Barlow Condensed', sans-serif", fontSize: '2.5rem' }}>7</span>
+            <span style={{ color: '#FF6200', fontFamily: "'Barlow Condensed', sans-serif", fontSize: '2.5rem' }}>7</span>
             <span className="text-white text-xl">T</span>
           </div>
         </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { connection } from 'next/server';
 import { supabase } from '@/lib/supabase/client';
+import Logo from '@/components/Logo';
 
 export default async function ProductCategories() {
   // Opt out of static prerendering — always fetch fresh data on every request
@@ -48,7 +49,7 @@ export default async function ProductCategories() {
         
         {/* Section Title */}
         <div className="text-center mb-10">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#8B1A3B] uppercase tracking-wide">
+          <h2 className="text-2xl md:text-3xl font-bold text-[#FF6200] uppercase tracking-wide">
             PRODUCT CATEGORIES
           </h2>
         </div>
@@ -96,11 +97,10 @@ export default async function ProductCategories() {
                 Tip Top Uniforms has been providing Tailoring, Alteration & Repair Services to the people of QATAR for over 22 years Since the 1998.
               </p>
               {/* Small Logo */}
-              <div className="flex items-end leading-none">
-                <span className="text-[32px] font-black italic text-[#8B1A3B] leading-none" style={{ fontFamily: "'Playfair Display', serif" }}>7</span>
-                <span className="text-[32px] font-black italic text-[#8B1A3B] leading-none" style={{ fontFamily: "'Playfair Display', serif" }}>T</span>
+              <div className="flex items-center leading-none">
+                <Logo className="h-9 w-auto" />
                 <div className="flex flex-col border-l-2 border-gray-300 pl-2 ml-2 text-left">
-                  <span className="text-[10px] font-bold tracking-widest text-[#1C1C1C] uppercase">TIP TOP UNIFORMS</span>
+                  <span className="text-[10px] font-bold tracking-widest text-[#232323] uppercase">TIP TOP UNIFORMS TRADING W.L.L</span>
                   <span className="text-[7px] font-medium text-gray-500 uppercase tracking-widest mt-0.5">MADE IN QATAR</span>
                 </div>
               </div>

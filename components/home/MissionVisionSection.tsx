@@ -9,17 +9,17 @@ export default function MissionVisionSection() {
 
           {/* Text side */}
           <div>
-            <span className="text-[#E8620A] font-bold tracking-[0.28em] uppercase text-xs mb-4 block">Mission &amp; Vision</span>
+            <span className="text-[#FF6200] font-bold tracking-[0.28em] uppercase text-xs mb-4 block">Mission &amp; Vision</span>
             <h2 className="text-4xl md:text-5xl font-black text-[#1C1C1C] mb-10 leading-tight"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
               Building a<br />
-              <span className="italic text-[#E8620A]">World-Class Brand</span>
+              <span className="italic text-[#FF6200]">World-Class Brand</span>
             </h2>
 
             <div className="space-y-10">
               {/* Mission */}
-              <div className="relative pl-8 before:absolute before:left-0 before:top-0 before:h-full before:w-[3px] before:bg-[#E8620A]">
+              <div className="relative pl-8 before:absolute before:left-0 before:top-0 before:h-full before:w-[3px] before:bg-[#FF6200]">
                 <h3 className="font-black text-[#1C1C1C] text-lg uppercase tracking-wider mb-3">Our Mission</h3>
                 <p className="text-gray-600 leading-relaxed font-light text-base">
                   Providing the highest quality products and service standards to our clients — while ensuring career opportunities for our employees and continued support to our community.
@@ -36,7 +36,7 @@ export default function MissionVisionSection() {
 
               {/* Philosophy */}
               <div className="bg-[#1C1C1C] text-white px-8 py-6">
-                <p className="text-[#E8620A] text-xs font-bold tracking-widest uppercase mb-3">Our Philosophy</p>
+                <p className="text-[#FF6200] text-xs font-bold tracking-widest uppercase mb-3">Our Philosophy</p>
                 <p className="font-black text-lg leading-relaxed" style={{ fontFamily: "'Playfair Display', serif" }}>
                   "Think Big. Think Different. Think Fast. Think Ahead. Aim for the best."
                 </p>
@@ -54,7 +54,7 @@ export default function MissionVisionSection() {
               />
             </div>
             {/* Accent border */}
-            <div className="absolute -top-4 -left-4 w-3/4 h-3/4 border-2 border-[#E8620A] -z-10 pointer-events-none"></div>
+            <div className="absolute -top-4 -left-4 w-3/4 h-3/4 border-2 border-[#FF6200] -z-10 pointer-events-none"></div>
           </div>
         </div>
       </div>

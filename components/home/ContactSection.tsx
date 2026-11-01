@@ -11,18 +11,18 @@ export default function ContactSection() {
 
           {/* Left: Info */}
           <div>
-            <span className="text-[#E8620A] font-bold tracking-[0.28em] uppercase text-xs mb-4 block">Get In Touch</span>
+            <span className="text-[#FF6200] font-bold tracking-[0.28em] uppercase text-xs mb-4 block">Get In Touch</span>
             <h2 className="text-4xl md:text-5xl font-black text-[#1C1C1C] mb-8 leading-tight"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
               Let's Create<br />
-              <span className="italic text-[#E8620A]">Your Uniform</span>
+              <span className="italic text-[#FF6200]">Your Uniform</span>
             </h2>
-            <div className="w-12 h-[3px] bg-[#E8620A] rounded-full mb-10"></div>
+            <div className="w-12 h-[3px] bg-[#FF6200] rounded-full mb-10"></div>
 
             <div className="space-y-8">
               <div className="flex gap-5 items-start group">
-                <div className="w-12 h-12 bg-[#E8620A] flex items-center justify-center shrink-0 text-white">
+                <div className="w-12 h-12 bg-[#FF6200] flex items-center justify-center shrink-0 text-white">
                   <MapPin size={20} />
                 </div>
                 <div>
@@ -40,8 +40,8 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <p className="font-black text-[#1C1C1C] text-sm uppercase tracking-wider mb-1">Mobile</p>
-                  <a href="tel:+97455016644" className="text-gray-500 text-sm hover:text-[#E8620A] transition-colors block">+974 5501 6644</a>
-                  <a href="tel:+97466901189" className="text-gray-500 text-sm hover:text-[#E8620A] transition-colors block">+974 6690 1189</a>
+                  <a href="tel:+97455016644" className="text-gray-500 text-sm hover:text-[#FF6200] transition-colors block">+974 5501 6644</a>
+                  <a href="tel:+97466901189" className="text-gray-500 text-sm hover:text-[#FF6200] transition-colors block">+974 6690 1189</a>
                 </div>
               </div>
 
@@ -51,7 +51,7 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <p className="font-black text-[#1C1C1C] text-sm uppercase tracking-wider mb-1">Email</p>
-                  <a href="mailto:info.tiptopuniforms@gmail.com" className="text-gray-500 text-sm hover:text-[#E8620A] transition-colors">
+                  <a href="mailto:info.tiptopuniforms@gmail.com" className="text-gray-500 text-sm hover:text-[#FF6200] transition-colors">
                     info.tiptopuniforms@gmail.com
                   </a>
                 </div>
@@ -78,7 +78,7 @@ export default function ContactSection() {
                   <label className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">First Name</label>
                   <input
                     type="text"
-                    className="w-full border border-gray-200 focus:border-[#E8620A] outline-none px-4 py-3 text-sm text-gray-700 transition-colors"
+                    className="w-full border border-gray-200 focus:border-[#FF6200] outline-none px-4 py-3 text-sm text-gray-700 transition-colors"
                     placeholder="John"
                   />
                 </div>
@@ -86,7 +86,7 @@ export default function ContactSection() {
                   <label className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Last Name</label>
                   <input
                     type="text"
-                    className="w-full border border-gray-200 focus:border-[#E8620A] outline-none px-4 py-3 text-sm text-gray-700 transition-colors"
+                    className="w-full border border-gray-200 focus:border-[#FF6200] outline-none px-4 py-3 text-sm text-gray-700 transition-colors"
                     placeholder="Doe"
                   />
                 </div>
@@ -95,13 +95,13 @@ export default function ContactSection() {
                 <label className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Email</label>
                 <input
                   type="email"
-                  className="w-full border border-gray-200 focus:border-[#E8620A] outline-none px-4 py-3 text-sm text-gray-700 transition-colors"
+                  className="w-full border border-gray-200 focus:border-[#FF6200] outline-none px-4 py-3 text-sm text-gray-700 transition-colors"
                   placeholder="john@company.com"
                 />
               </div>
               <div>
                 <label className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Uniform Category</label>
-                <select className="w-full border border-gray-200 focus:border-[#E8620A] outline-none px-4 py-3 text-sm text-gray-700 transition-colors bg-white">
+                <select className="w-full border border-gray-200 focus:border-[#FF6200] outline-none px-4 py-3 text-sm text-gray-700 transition-colors bg-white">
                   <option value="">Select a category...</option>
                   {['Corporate', 'Industrial', 'Hospitality', 'School', 'Healthcare', 'Aviation', 'Chef', 'Alterations'].map((c) => (
                     <option key={c}>{c}</option>
@@ -112,13 +112,13 @@ export default function ContactSection() {
                 <label className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Message</label>
                 <textarea
                   rows={4}
-                  className="w-full border border-gray-200 focus:border-[#E8620A] outline-none px-4 py-3 text-sm text-gray-700 transition-colors resize-none"
+                  className="w-full border border-gray-200 focus:border-[#FF6200] outline-none px-4 py-3 text-sm text-gray-700 transition-colors resize-none"
                   placeholder="Tell us about your uniform requirements..."
                 />
               </div>
               <button
                 type="submit"
-                className="w-full bg-[#E8620A] hover:bg-[#CF5507] text-white font-bold py-4 px-8 transition-all duration-200 uppercase tracking-widest text-sm"
+                className="w-full bg-[#FF6200] hover:bg-[#E05700] text-white font-bold py-4 px-8 transition-all duration-200 uppercase tracking-widest text-sm"
               >
                 Send Enquiry
               </button>

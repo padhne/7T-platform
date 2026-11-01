@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase/client';
+import Logo from '@/components/Logo';
 
 export default function ValuesSection() {
   const [bannerImage, setBannerImage] = useState('https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1600&q=80');
@@ -62,9 +63,8 @@ export default function ValuesSection() {
 
           <div className="shrink-0 relative w-40 h-40 flex items-center justify-center border-[1px] border-dashed border-gray-300 rounded-full">
             <div className="text-center">
-              <div className="flex items-end justify-center leading-none">
-                <span className="text-[28px] font-black italic text-[#8B1A3B] leading-none" style={{ fontFamily: "'Playfair Display', serif" }}>7</span>
-                <span className="text-[28px] font-black italic text-[#8B1A3B] leading-none" style={{ fontFamily: "'Playfair Display', serif" }}>T</span>
+              <div className="flex items-center justify-center">
+                <Logo className="h-9 w-auto" />
               </div>
             </div>
             {/* Circular Text SVG Simulation */}

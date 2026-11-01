@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Search, User, ShoppingBag, Menu, X, Home, Grid, Phone } from 'lucide-react';
 import AuthModal from '@/components/AuthModal';
+import Logo from '@/components/Logo';
 import { supabase } from '@/lib/supabase/client';
 
 export default function Header() {
@@ -58,23 +59,20 @@ export default function Header() {
           <div className="flex flex-row items-center justify-between py-4 md:py-6">
 
             {/* Logo (Left) */}
-            <Link href="/" className="flex items-center gap-3 group" aria-label="Tip Top Uniforms Trading">
-              <div className="relative flex items-end leading-none select-none">
-                <span className="text-[42px] font-black italic text-[#8B1A3B] leading-none tracking-tighter" style={{ fontFamily: "'Playfair Display', serif" }}>7</span>
-                <span className="text-[42px] font-black italic text-[#8B1A3B] leading-none tracking-tighter" style={{ fontFamily: "'Playfair Display', serif" }}>T</span>
-              </div>
+            <Link href="/" className="flex items-center gap-3 group" aria-label="Tip Top Uniforms Trading W.L.L">
+              <Logo className="h-10 md:h-12 w-auto select-none" />
               <div className="flex flex-col border-l-2 border-gray-300 pl-3">
-                <span className="text-[14px] font-bold tracking-widest leading-tight text-[#1C1C1C] uppercase">TIP TOP UNIFORMS</span>
+                <span className="text-[12px] md:text-[14px] font-bold tracking-widest leading-tight text-[#232323] uppercase">TIP TOP UNIFORMS TRADING <span className="text-[#FF6200]">W.L.L</span></span>
                 <span className="text-[9px] font-medium text-gray-500 uppercase tracking-widest mt-0.5">MADE IN QATAR</span>
               </div>
             </Link>
 
             {/* Middle Info (Phone & Search) */}
             <div className="hidden md:flex items-center gap-6">
-              <a href={`tel:${(settings?.phone1 || '+974 5501 6644').replace(/[^\d+]/g, '')}`} className="text-[13px] font-medium text-[#1C1C1C] hover:text-[#8B1A3B] transition-colors">
+              <a href={`tel:${(settings?.phone1 || '+974 5501 6644').replace(/[^\d+]/g, '')}`} className="text-[13px] font-medium text-[#1C1C1C] hover:text-[#FF6200] transition-colors">
                 {settings?.phone1 || '+974 5501 6644'}
               </a>
-              <button className="text-gray-900 hover:text-[#8B1A3B] transition-colors" aria-label="Search">
+              <button className="text-gray-900 hover:text-[#FF6200] transition-colors" aria-label="Search">
                 <Search size={20} strokeWidth={1.5} />
               </button>
             </div>
@@ -144,15 +142,15 @@ export default function Header() {
       {/* Mobile Bottom Navigation Bar */}
       <div className="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 shadow-[0_-4px_10px_rgba(0,0,0,0.05)] z-50 pb-safe">
         <div className="flex justify-around items-center h-16">
-          <Link href="/" className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${pathname === '/' ? 'text-[#8B1A3B]' : 'text-gray-500'}`}>
+          <Link href="/" className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${pathname === '/' ? 'text-[#FF6200]' : 'text-gray-500'}`}>
             <Home size={22} strokeWidth={pathname === '/' ? 2.5 : 1.5} />
             <span className="text-[10px] font-semibold">Home</span>
           </Link>
-          <Link href="/collections" className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${pathname.startsWith('/collections') ? 'text-[#8B1A3B]' : 'text-gray-500'}`}>
+          <Link href="/collections" className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${pathname.startsWith('/collections') ? 'text-[#FF6200]' : 'text-gray-500'}`}>
             <Grid size={22} strokeWidth={pathname.startsWith('/collections') ? 2.5 : 1.5} />
             <span className="text-[10px] font-semibold">Products</span>
           </Link>
-          <Link href="/contact" className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${pathname === '/contact' ? 'text-[#8B1A3B]' : 'text-gray-500'}`}>
+          <Link href="/contact" className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${pathname === '/contact' ? 'text-[#FF6200]' : 'text-gray-500'}`}>
             <Phone size={22} strokeWidth={pathname === '/contact' ? 2.5 : 1.5} />
             <span className="text-[10px] font-semibold">Contact</span>
           </Link>

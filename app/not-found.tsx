@@ -1,14 +1,15 @@
 import Link from 'next/link'
+import Logo from '@/components/Logo'
  
 export default function NotFound() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[75vh] px-4 text-center">
       <div className="mb-6 relative">
-        <span className="text-[120px] md:text-[180px] font-black italic text-[#8B1A3B]/10 leading-none select-none" style={{ fontFamily: "'Playfair Display', serif" }}>
+        <span className="text-[120px] md:text-[180px] font-black italic text-[#FF6200]/10 leading-none select-none" style={{ fontFamily: "'Playfair Display', serif" }}>
           404
         </span>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-           <span className="text-4xl md:text-5xl font-black italic text-[#8B1A3B] leading-none" style={{ fontFamily: "'Playfair Display', serif" }}>7T</span>
+           <Logo className="h-14 md:h-20 w-auto" />
         </div>
       </div>
       
@@ -19,7 +20,7 @@ export default function NotFound() {
       
       <Link 
         href="/"
-        className="text-[12px] font-bold text-white bg-[#1C1C1C] hover:bg-[#8B1A3B] px-10 py-4 uppercase tracking-[0.2em] transition-colors"
+        className="text-[12px] font-bold text-white bg-[#1C1C1C] hover:bg-[#FF6200] px-10 py-4 uppercase tracking-[0.2em] transition-colors"
       >
         BACK TO HOMEPAGE
       </Link>

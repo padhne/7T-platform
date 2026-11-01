@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Phone, Mail, MapPin, MessageCircle } from 'lucide-react';
 import { supabase } from '@/lib/supabase/client';
+import Logo from '@/components/Logo';
 
 export default function Footer() {
   const [categories, setCategories] = useState<{id: string, name: string, slug?: string}[]>([]);
@@ -32,11 +33,8 @@ export default function Footer() {
   return (
     <footer className="bg-[#111111] text-white pt-20 pb-10 relative overflow-hidden">
       {/* Decorative 7T watermark */}
-      <div className="absolute bottom-0 right-8 select-none pointer-events-none opacity-[0.04] leading-none"
-        style={{ fontFamily: "'Playfair Display', serif" }}
-      >
-        <span className="text-[18rem] font-black italic text-[#E8620A]">7</span>
-        <span className="text-[18rem] font-black italic text-white">T</span>
+      <div className="absolute bottom-0 right-8 select-none pointer-events-none opacity-[0.04]">
+        <Logo className="h-72 w-auto" tColor="#FFFFFF" />
       </div>
 
       <div className="max-w-[1600px] mx-auto px-4 md:px-16 relative z-10">
@@ -45,32 +43,29 @@ export default function Footer() {
           {/* Column 1: Brand */}
           <div>
             {/* Logo */}
-            <div className="flex items-end gap-2 mb-6">
-              <span className="text-[48px] font-black italic text-[#E8620A] leading-none"
-                style={{ fontFamily: "'Playfair Display', serif" }}>7</span>
-              <span className="text-[48px] font-black italic text-white/60 leading-none"
-                style={{ fontFamily: "'Playfair Display', serif" }}>T</span>
+            <div className="mb-6">
+              <Logo className="h-14 w-auto" tColor="#FFFFFF" />
             </div>
-            <p className="text-[11px] font-black tracking-[0.22em] text-white uppercase mb-1">Tip Top Uniforms Trading</p>
-            <p className="text-[9px] text-[#E8620A] font-bold tracking-[0.22em] uppercase mb-6">Doha, Qatar</p>
+            <p className="text-[11px] font-black tracking-[0.22em] text-white uppercase mb-1">Tip Top Uniforms Trading W.L.L</p>
+            <p className="text-[9px] text-[#FF6200] font-bold tracking-[0.22em] uppercase mb-6">Doha, Qatar</p>
 
             <div className="space-y-3 text-sm text-gray-400">
               <div className="flex items-start gap-3">
-                <MapPin size={14} className="text-[#E8620A] mt-0.5 shrink-0" />
+                <MapPin size={14} className="text-[#FF6200] mt-0.5 shrink-0" />
                 <span className="whitespace-pre-line">{address}</span>
               </div>
-              <a href={`tel:${phone1Link}`} className="flex items-center gap-3 hover:text-[#E8620A] transition-colors">
-                <Phone size={14} className="text-[#E8620A] shrink-0" />
+              <a href={`tel:${phone1Link}`} className="flex items-center gap-3 hover:text-[#FF6200] transition-colors">
+                <Phone size={14} className="text-[#FF6200] shrink-0" />
                 {phone1}
               </a>
               {phone2 && (
-                <a href={`tel:${phone2Link}`} className="flex items-center gap-3 hover:text-[#E8620A] transition-colors">
-                  <Phone size={14} className="text-[#E8620A] shrink-0" />
+                <a href={`tel:${phone2Link}`} className="flex items-center gap-3 hover:text-[#FF6200] transition-colors">
+                  <Phone size={14} className="text-[#FF6200] shrink-0" />
                   {phone2}
                 </a>
               )}
-              <a href={`mailto:${email}`} className="flex items-center gap-3 hover:text-[#E8620A] transition-colors">
-                <Mail size={14} className="text-[#E8620A] shrink-0" />
+              <a href={`mailto:${email}`} className="flex items-center gap-3 hover:text-[#FF6200] transition-colors">
+                <Mail size={14} className="text-[#FF6200] shrink-0" />
                 {email}
               </a>
             </div>
@@ -89,8 +84,8 @@ export default function Footer() {
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-8 text-sm text-gray-400">
               {categories.map((cat) => (
                 <li key={cat.id}>
-                  <Link href={`/collections/${cat.slug || cat.id}`} className="hover:text-[#E8620A] transition-colors flex items-center gap-2">
-                    <span className="w-4 h-px bg-[#E8620A]/50 inline-block"></span>
+                  <Link href={`/collections/${cat.slug || cat.id}`} className="hover:text-[#FF6200] transition-colors flex items-center gap-2">
+                    <span className="w-4 h-px bg-[#FF6200]/50 inline-block"></span>
                     {cat.name}
                   </Link>
                 </li>
@@ -101,7 +96,7 @@ export default function Footer() {
           {/* Column 3: Philosophy */}
           <div>
             <h3 className="text-xs font-bold mb-6 tracking-[0.2em] uppercase text-white border-b border-white/10 pb-4">Our Philosophy</h3>
-            <div className="border-l-2 border-[#E8620A] pl-4">
+            <div className="border-l-2 border-[#FF6200] pl-4">
               <p className="text-xs text-gray-500 italic leading-relaxed">
                 "Think Big. Think Different. Think Fast. Aim for the best."
               </p>
@@ -111,21 +106,21 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600">
-          <p>© 2026 Tip Top Uniforms Trading · Doha, Qatar. All Rights Reserved.</p>
+          <p>© 2026 Tip Top Uniforms Trading W.L.L · Doha, Qatar. All Rights Reserved.</p>
           <div className="flex items-center gap-6">
-            <span className="text-[#E8620A] font-bold tracking-widest uppercase text-[10px]">Follow Us</span>
+            <span className="text-[#FF6200] font-bold tracking-widest uppercase text-[10px]">Follow Us</span>
             {settings?.facebook_url && (
-              <a href={settings.facebook_url} target="_blank" rel="noopener noreferrer" className="hover:text-[#E8620A] transition-colors font-semibold">
+              <a href={settings.facebook_url} target="_blank" rel="noopener noreferrer" className="hover:text-[#FF6200] transition-colors font-semibold">
                 Facebook
               </a>
             )}
             {settings?.instagram_url && (
-              <a href={settings.instagram_url} target="_blank" rel="noopener noreferrer" className="hover:text-[#E8620A] transition-colors font-semibold">
+              <a href={settings.instagram_url} target="_blank" rel="noopener noreferrer" className="hover:text-[#FF6200] transition-colors font-semibold">
                 Instagram
               </a>
             )}
             {settings?.linkedin_url && (
-              <a href={settings.linkedin_url} target="_blank" rel="noopener noreferrer" className="hover:text-[#E8620A] transition-colors font-semibold">
+              <a href={settings.linkedin_url} target="_blank" rel="noopener noreferrer" className="hover:text-[#FF6200] transition-colors font-semibold">
                 LinkedIn
               </a>
             )}

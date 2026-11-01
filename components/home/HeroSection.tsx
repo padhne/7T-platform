@@ -64,11 +64,11 @@ export default function HeroSection() {
             Genuine Bespoke Tailoring & Online Orders
           </h3>
 
-          <h1 className="text-5xl md:text-7xl lg:text-[85px] font-black text-white leading-[1.1] mb-6 tracking-tight animate-fade-in-up animate-delay-100 drop-shadow-lg"
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[85px] font-black text-white leading-[1.1] mb-6 tracking-tight animate-fade-in-up animate-delay-100 drop-shadow-lg"
             style={{ fontFamily: "'Inter', sans-serif" }}
           >
-            BESPOKE UNIFORMS.<br />
-            TAILORED EXCELLENCE.
+            TIP TOP UNIFORMS<br />
+            TRADING <span className="text-[#FF6200]">W.L.L</span>
           </h1>
 
           <p className="text-base md:text-lg text-gray-100 mb-10 max-w-2xl font-medium animate-fade-in-up animate-delay-200 drop-shadow-md">
@@ -76,8 +76,8 @@ export default function HeroSection() {
           </p>
 
           <div className="animate-fade-in-up animate-delay-300">
-            <Link href="#collections"
-              className="text-white font-bold text-sm border-b-2 border-white pb-1 hover:text-[#E8620A] hover:border-[#E8620A] transition-colors uppercase tracking-widest"
+            <Link href="/collections"
+              className="text-white font-bold text-sm border-b-2 border-white pb-1 hover:text-[#FF6200] hover:border-[#FF6200] transition-colors uppercase tracking-widest"
             >
               SHOP NOW
             </Link>
@@ -88,7 +88,7 @@ export default function HeroSection() {
       {/* Hero Footer Bar */}
       <div className="w-full max-w-[1600px] mx-auto px-4 md:px-8 py-6 flex flex-col md:flex-row items-center justify-between text-xs font-bold text-gray-600 tracking-widest uppercase">
         <div>
-          TIP TOP UNIFORMS TRADING · DOHA, QATAR
+          TIP TOP UNIFORMS TRADING W.L.L · DOHA, QATAR
         </div>
         <div className="flex items-center gap-3 mt-4 md:mt-0">
           {/* Carousel indicators simulation */}

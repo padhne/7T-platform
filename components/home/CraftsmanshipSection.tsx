@@ -20,15 +20,15 @@ export default function CraftsmanshipSection() {
 
         {/* Right: Text */}
         <div className="flex flex-col justify-center px-10 md:px-16 py-20">
-          <span className="text-[#E8620A] font-bold tracking-[0.28em] uppercase text-xs mb-5 block">Creativity</span>
+          <span className="text-[#FF6200] font-bold tracking-[0.28em] uppercase text-xs mb-5 block">Creativity</span>
           <h2 className="text-4xl md:text-5xl font-black text-white mb-8 leading-tight"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
             Craftsmanship<br />
-            <span className="italic text-[#E8620A]">&amp; Dedication</span>
+            <span className="italic text-[#FF6200]">&amp; Dedication</span>
           </h2>
 
-          <p className="text-xl text-gray-300 leading-relaxed font-light border-l-[3px] border-[#E8620A] pl-6 mb-10">
+          <p className="text-xl text-gray-300 leading-relaxed font-light border-l-[3px] border-[#FF6200] pl-6 mb-10">
             At Tip Top Uniforms, we believe our work goes beyond fabric — it&apos;s about the trust parents and learners place in us. We craft each uniform with care, precision, and a genuine desire to be part of a student&apos;s journey — helping them feel confident, comfortable, and ready to take on the world.
           </p>
 
@@ -44,7 +44,7 @@ export default function CraftsmanshipSection() {
               'Sustainable fabric focus',
             ].map((point) => (
               <div key={point} className="flex items-center gap-4">
-                <div className="w-8 h-px bg-[#E8620A] shrink-0"></div>
+                <div className="w-8 h-px bg-[#FF6200] shrink-0"></div>
                 <span className="text-sm text-gray-400 uppercase tracking-wider font-semibold">{point}</span>
               </div>
             ))}

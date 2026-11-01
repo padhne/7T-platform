@@ -28,7 +28,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
           <button 
             onClick={() => setIsLogin(true)}
             className={`pb-4 text-lg font-bold tracking-widest uppercase transition-colors ${
-              isLogin ? 'text-[#8B1A3B] border-b-2 border-[#8B1A3B]' : 'text-gray-400 hover:text-black'
+              isLogin ? 'text-[#FF6200] border-b-2 border-[#FF6200]' : 'text-gray-400 hover:text-black'
             }`}
           >
             Sign In
@@ -36,7 +36,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
           <button 
             onClick={() => setIsLogin(false)}
             className={`pb-4 text-lg font-bold tracking-widest uppercase transition-colors ${
-              !isLogin ? 'text-[#8B1A3B] border-b-2 border-[#8B1A3B]' : 'text-gray-400 hover:text-black'
+              !isLogin ? 'text-[#FF6200] border-b-2 border-[#FF6200]' : 'text-gray-400 hover:text-black'
             }`}
           >
             Register
@@ -50,7 +50,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
               <label className="block text-xs font-bold tracking-widest uppercase text-gray-700 mb-2">Full Name</label>
               <input 
                 type="text" 
-                className="w-full border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:border-[#8B1A3B] transition-colors"
+                className="w-full border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:border-[#FF6200] transition-colors"
                 placeholder="John Doe"
               />
             </div>
@@ -60,7 +60,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
             <label className="block text-xs font-bold tracking-widest uppercase text-gray-700 mb-2">Email Address</label>
             <input 
               type="email" 
-              className="w-full border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:border-[#8B1A3B] transition-colors"
+              className="w-full border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:border-[#FF6200] transition-colors"
               placeholder="you@example.com"
             />
           </div>
@@ -69,19 +69,19 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
             <div className="flex justify-between items-center mb-2">
               <label className="block text-xs font-bold tracking-widest uppercase text-gray-700">Password</label>
               {isLogin && (
-                <a href="#" className="text-[10px] font-bold text-gray-400 hover:text-[#8B1A3B] uppercase tracking-wider">Forgot?</a>
+                <a href="#" className="text-[10px] font-bold text-gray-400 hover:text-[#FF6200] uppercase tracking-wider">Forgot?</a>
               )}
             </div>
             <input 
               type="password" 
-              className="w-full border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:border-[#8B1A3B] transition-colors"
+              className="w-full border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:border-[#FF6200] transition-colors"
               placeholder="••••••••"
             />
           </div>
 
           <button 
             type="submit"
-            className="mt-4 w-full bg-[#1C1C1C] hover:bg-[#8B1A3B] text-white font-bold tracking-widest uppercase py-4 transition-colors"
+            className="mt-4 w-full bg-[#1C1C1C] hover:bg-[#FF6200] text-white font-bold tracking-widest uppercase py-4 transition-colors"
           >
             {isLogin ? 'Sign In' : 'Create Account'}
           </button>
