@@ -23,13 +23,13 @@ export default function Header() {
     // Fetch categories and settings
     const fetchData = async () => {
       const [catsRes, settingsRes] = await Promise.all([
-        supabase.from('categories').select('id, name').order('created_at', { ascending: false }),
+        supabase.from('categories').select('id, name, slug').order('created_at', { ascending: false }),
         supabase.from('site_settings').select('phone1').eq('id', 1).single()
       ]);
       if (catsRes.data) {
         setSubNavLinks(catsRes.data.map((cat: any) => ({
           label: cat.name,
-          href: `/collections/${cat.id}`
+          href: `/collections/${cat.slug || cat.id}`
         })));
       }
       if (settingsRes.data) {
@@ -45,6 +45,7 @@ export default function Header() {
     { label: 'HOMEPAGE', href: '/' },
     { label: 'PRODUCTS', href: '/collections' },
     // { label: 'PROMOTIONAL PROJECTS', href: '/promotional' },
+    { label: 'FAQ', href: '/faq' },
     { label: 'CONTACT', href: '/contact' },
   ];
 
