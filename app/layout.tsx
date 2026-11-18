@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Lato, Barlow_Condensed } from "next/font/google";
 import "./globals.css";
 import { ConditionalHeader, ConditionalFooter } from "@/components/ClientLayoutWrapper";
-import { SITE, SITE_URL, SEO_KEYWORDS, jsonLd, siteJsonLd } from "@/lib/site";
+import { SITE, SITE_URL, SEO_KEYWORDS, jsonLd, siteJsonLd, geoMetaTags } from "@/lib/site";
 
 const lato = Lato({
   variable: "--font-sans",
@@ -39,6 +39,7 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   formatDetection: { telephone: true, email: true, address: true },
+  other: geoMetaTags(),
   openGraph: {
     type: 'website',
     locale: 'en_QA',

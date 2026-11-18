@@ -27,6 +27,9 @@ export const SITE = {
     addressLocality: 'Doha',
     addressCountry: 'QA',
   },
+  // Shop location for local search. Fill in from Google Maps (right-click the shop pin -> copy the numbers).
+  // Leave as null until you have the exact values; wrong coordinates hurt local ranking.
+  geo: null as { latitude: number; longitude: number } | null,
   foundingYear: '1998',
   logo: '/images/logo.png',
 } as const;
@@ -56,6 +59,19 @@ export const SEO_KEYWORDS = [
   'uniform alterations Doha',
 ];
 
+/** Classic geo meta tags (geo.region / geo.placename / geo.position / ICBM). */
+export function geoMetaTags(): Record<string, string> {
+  const tags: Record<string, string> = {
+    'geo.region': 'QA-DA',
+    'geo.placename': 'Doha, Qatar',
+  };
+  if (SITE.geo) {
+    tags['geo.position'] = `${SITE.geo.latitude};${SITE.geo.longitude}`;
+    tags['ICBM'] = `${SITE.geo.latitude}, ${SITE.geo.longitude}`;
+  }
+  return tags;
+}
+
 /** Serialize JSON-LD safely for a <script> tag (per Next.js docs). */
 export function jsonLd(data: unknown) {
   return { __html: JSON.stringify(data).replace(/</g, '\\u003c') };
@@ -82,7 +98,16 @@ export function siteJsonLd() {
         foundingDate: SITE.foundingYear,
         priceRange: '$$',
         address: { '@type': 'PostalAddress', ...SITE.address },
-        areaServed: { '@type': 'Country', name: 'Qatar' },
+        ...(SITE.geo
+          ? {
+              geo: { '@type': 'GeoCoordinates', ...SITE.geo },
+              hasMap: `https://www.google.com/maps?q=${SITE.geo.latitude},${SITE.geo.longitude}`,
+            }
+          : {}),
+        areaServed: [
+          { '@type': 'Country', name: 'Qatar' },
+          { '@type': 'City', name: 'Doha' },
+        ],
         contactPoint: SITE.phones.map((telephone) => ({
           '@type': 'ContactPoint',
           telephone,
