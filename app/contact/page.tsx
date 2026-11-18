@@ -2,15 +2,15 @@ import React from 'react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Contact',
+  title: 'Contact Tip Top Uniforms Qatar',
   description:
-    'Get in touch with Tip Top Uniforms Trading W.L.L. Visit us at Shop No. F-62, Al Jaher Center, Doha, Qatar, or call +974 5501 6644.',
+    'Contact Tip Top Uniforms Trading W.L.L: Shop No. F-62, Al Jaher Center, Doha, Qatar. Phone & WhatsApp +974 5501 6644 / +974 6690 1189.',
   alternates: { canonical: '/contact' },
   openGraph: {
-    title: 'Contact | Tip Top Uniforms Trading',
+    title: 'Contact Tip Top Uniforms Qatar',
     description:
-      'Reach Tip Top Uniforms Trading — Shop No. F-62, Al Jaher Center, Doha, Qatar. Phone & WhatsApp: +974 5501 6644.',
-    url: 'https://tiptopuniforms.com/contact',
+      'Shop No. F-62, Al Jaher Center, Doha, Qatar. Phone & WhatsApp: +974 5501 6644.',
+    url: '/contact',
   },
 };
 
@@ -45,10 +45,10 @@ export default function ContactPage() {
               <div>
                 <h3 className="text-[22px] font-bold text-[#555C66] mb-6" style={{ fontFamily: "'Lato', sans-serif" }}>Customer Service</h3>
                 <div className="text-[15px] text-[#9CA3AF] space-y-1.5">
-                  <p><strong className="text-[#555C66]">Email:</strong> info.tiptopuniforms@gmail.com</p>
+                  <p><strong className="text-[#555C66]">Email:</strong> <a href="mailto:info.tiptopuniforms@gmail.com" className="hover:text-[#FF6200]">info.tiptopuniforms@gmail.com</a></p>
                   <p className="pt-1"><strong className="text-[#555C66]">Telephone & Whatsapp:</strong></p>
-                  <p>+974 5501 6644</p>
-                  <p>+974 6690 1189</p>
+                  <p><a href="tel:+97455016644" className="hover:text-[#FF6200]">+974 5501 6644</a></p>
+                  <p><a href="tel:+97466901189" className="hover:text-[#FF6200]">+974 6690 1189</a></p>
                 </div>
               </div>
 

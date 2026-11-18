@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Lato, Barlow_Condensed } from "next/font/google";
 import "./globals.css";
 import { ConditionalHeader, ConditionalFooter } from "@/components/ClientLayoutWrapper";
+import { SITE, SITE_URL, SEO_KEYWORDS, jsonLd, siteJsonLd } from "@/lib/site";
 
 const lato = Lato({
   variable: "--font-sans",
@@ -15,54 +16,41 @@ const barlowCondensed = Barlow_Condensed({
   subsets: ["latin"],
 });
 
-const BASE_URL = 'https://tiptopuniforms.com';
+const DEFAULT_TITLE = 'Tip Top Uniforms Qatar | Uniforms & Bespoke Tailoring in Doha';
+
+export const viewport: Viewport = {
+  themeColor: '#FF6200',
+};
 
 export const metadata: Metadata = {
-  metadataBase: new URL(BASE_URL),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Tip Top Uniforms Trading — Bespoke Tailoring, Doha Qatar',
-    template: '%s | Tip Top Uniforms Trading',
+    default: DEFAULT_TITLE,
+    template: '%s | Tip Top Uniforms Qatar',
   },
-  description:
-    'Custom uniforms for corporate, industrial, hospitality, school & more. Genuine bespoke tailoring made-to-measure in Doha, Qatar.',
-  keywords: [
-    'uniforms Qatar',
-    'bespoke tailoring Doha',
-    'corporate uniforms',
-    'workwear Qatar',
-    'school uniforms Doha',
-    'hospitality uniforms',
-    'custom uniforms',
-    'Tip Top Uniforms',
-  ],
-  authors: [{ name: 'Tip Top Uniforms Trading W.L.L' }],
-  creator: 'Tip Top Uniforms Trading W.L.L',
+  description: SITE.description,
+  applicationName: SITE.name,
+  keywords: SEO_KEYWORDS,
+  authors: [{ name: SITE.legalName, url: SITE_URL }],
+  creator: SITE.legalName,
+  publisher: SITE.legalName,
+  category: 'Clothing & Uniforms',
   alternates: {
     canonical: '/',
   },
+  formatDetection: { telephone: true, email: true, address: true },
   openGraph: {
     type: 'website',
     locale: 'en_QA',
-    url: BASE_URL,
-    siteName: 'Tip Top Uniforms Trading',
-    title: 'Tip Top Uniforms Trading — Bespoke Tailoring, Doha Qatar',
-    description:
-      'Custom uniforms for corporate, industrial, hospitality, school & more. Genuine bespoke tailoring made-to-measure in Doha, Qatar.',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Tip Top Uniforms Trading — Bespoke Tailoring, Doha Qatar',
-      },
-    ],
+    url: SITE_URL,
+    siteName: SITE.name,
+    title: DEFAULT_TITLE,
+    description: SITE.description,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Tip Top Uniforms Trading — Bespoke Tailoring, Doha Qatar',
-    description:
-      'Custom uniforms for corporate, industrial, hospitality, school & more. Genuine bespoke tailoring made-to-measure in Doha, Qatar.',
-    images: ['/og-image.png'],
+    title: DEFAULT_TITLE,
+    description: SITE.description,
   },
   robots: {
     index: true,
@@ -72,7 +60,15 @@ export const metadata: Metadata = {
       follow: true,
       'max-image-preview': 'large',
       'max-snippet': -1,
+      'max-video-preview': -1,
     },
+  },
+  // Paste the content value from Google Search Console / Bing Webmaster "HTML tag" verification into these env vars.
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
+    other: process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+      ? { 'msvalidate.01': process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION }
+      : undefined,
   },
 };
 
@@ -84,6 +80,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${lato.variable} ${barlowCondensed.variable} antialiased h-full `} data-scroll-behavior="smooth">
       <body className="min-h-full flex flex-col font-sans bg-background text-foreground pb-16 md:pb-0">
+        <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(siteJsonLd())} />
         <ConditionalHeader />
         <main className="flex-1 w-full flex flex-col">
           {children}

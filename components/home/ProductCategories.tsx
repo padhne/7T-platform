@@ -64,7 +64,9 @@ export default async function ProductCategories() {
             >
               <img 
                 src={cat.image as string} 
-                alt={cat.title} 
+                alt={`${cat.title} uniforms — Tip Top Uniforms Qatar`}
+                loading="lazy"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80" />
@@ -83,7 +85,9 @@ export default async function ProductCategories() {
             <div className="w-full md:w-1/2 relative h-[300px] md:h-[400px]">
               <img 
                 src={featuredImage} 
-                alt="Featured collection" 
+                alt="Featured uniform collection by Tip Top Uniforms, Doha"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
               <div className="absolute bottom-0 left-0 w-full bg-[#4A8DB7]/90 text-white py-3 px-6">

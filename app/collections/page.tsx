@@ -4,15 +4,15 @@ import CollectionsCatalog from '@/components/home/CollectionsCatalog';
 import ProductCategories from '@/components/home/ProductCategories';
 
 export const metadata: Metadata = {
-  title: 'Collections',
+  title: 'Uniform Collections in Qatar',
   description:
-    'Browse all Tip Top Uniforms Trading collections — corporate, hospitality, school, industrial, and more. Premium fabrics, bespoke tailoring.',
+    'Browse Tip Top Uniforms Qatar collections: school, corporate, hotel, restaurant, chef, hospitality and industrial uniforms, made to measure in Doha.',
   alternates: { canonical: '/collections' },
   openGraph: {
-    title: 'Collections | Tip Top Uniforms Trading',
+    title: 'Uniform Collections in Qatar | Tip Top Uniforms',
     description:
-      'Browse all uniform collections — corporate, hospitality, school, industrial, and more. Premium fabrics, bespoke tailoring.',
-    url: 'https://tiptopuniforms.com/collections',
+      'School, corporate, hospitality and industrial uniforms, made to measure in Doha by Tip Top Uniforms.',
+    url: '/collections',
   },
 };
 

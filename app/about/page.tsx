@@ -6,15 +6,15 @@ import MissionVisionSection from '@/components/home/MissionVisionSection';
 import ValuesSection from '@/components/home/ValuesSection';
 
 export const metadata: Metadata = {
-  title: 'About Us',
+  title: 'About Tip Top Uniforms Trading W.L.L',
   description:
-    'Learn about Tip Top Uniforms Trading W.L.L — our story, craftsmanship, mission, and core values. Based in Doha, Qatar, we deliver bespoke workwear built to last.',
+    'About Tip Top Uniforms (TipTop Uniforms Trading W.L.L): a Doha-based uniform maker and tailor serving Qatar since 1998. Our story, craftsmanship, mission and values.',
   alternates: { canonical: '/about' },
   openGraph: {
-    title: 'About Us | Tip Top Uniforms Trading',
+    title: 'About Tip Top Uniforms Qatar',
     description:
-      'Learn about Tip Top Uniforms Trading W.L.L — our story, craftsmanship, mission, and core values. Based in Doha, Qatar.',
-    url: 'https://tiptopuniforms.com/about',
+      'A Doha-based uniform maker and tailor serving Qatar since 1998.',
+    url: '/about',
   },
 };
 

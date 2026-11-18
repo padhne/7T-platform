@@ -36,7 +36,8 @@ export default function HeroSection() {
         <div ref={imgRef} className="absolute inset-0 z-0 will-change-transform">
           <img
             src={heroImage}
-            alt="Professional corporate uniforms"
+            alt="Tip Top Uniforms Qatar — professional uniforms tailored in Doha"
+            fetchPriority="high"
             className="w-full h-full object-cover scale-110"
             style={{ objectPosition: 'center 30%' }}
           />
@@ -60,9 +61,9 @@ export default function HeroSection() {
         {/* Content (Centered) */}
         <div className="relative z-30 w-full max-w-[1200px] mx-auto px-6 flex flex-col items-center text-center">
 
-          <h3 className="text-sm md:text-base font-bold tracking-[0.2em] text-white uppercase mb-4 animate-fade-in-up">
+          <p className="text-sm md:text-base font-bold tracking-[0.2em] text-white uppercase mb-4 animate-fade-in-up">
             Genuine Bespoke Tailoring & Online Orders
-          </h3>
+          </p>
 
           <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[85px] font-black text-white leading-[1.1] mb-6 tracking-tight animate-fade-in-up animate-delay-100 drop-shadow-lg"
             style={{ fontFamily: "'Inter', sans-serif" }}
@@ -72,7 +73,7 @@ export default function HeroSection() {
           </h1>
 
           <p className="text-base md:text-lg text-gray-100 mb-10 max-w-2xl font-medium animate-fade-in-up animate-delay-200 drop-shadow-md">
-            We create genuine bespoke tailoring — timeless, made-to-measure garments crafted exclusively for every client, with the finest artisanal craftsmanship.
+            Tip Top Uniforms is a uniform maker and bespoke tailor in Doha, Qatar. We make school, corporate, hospitality and industrial uniforms to measure for every client.
           </p>
 
           <div className="animate-fade-in-up animate-delay-300">

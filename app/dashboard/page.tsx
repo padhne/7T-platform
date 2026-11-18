@@ -2,8 +2,12 @@ import React from 'react';
 import { supabase } from '@/lib/supabase/client';
 import { FolderPlus, Image as ImageIcon, Activity } from 'lucide-react';
 import Link from 'next/link';
+import { connection } from 'next/server';
 
 export default async function DashboardOverview() {
+  // Opt out of static prerendering — counts must reflect the latest uploads
+  await connection();
+
   // Fetch total categories
   const { count: categoriesCount } = await supabase
     .from('categories')

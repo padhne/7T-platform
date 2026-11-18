@@ -3,15 +3,15 @@ import type { Metadata } from 'next';
 import AlterationsSection from '@/components/home/AlterationsSection';
 
 export const metadata: Metadata = {
-  title: 'Services',
+  title: 'Tailoring, Alterations & Uniform Repairs in Doha',
   description:
-    'Professional uniform alterations, repairs, and made-to-measure tailoring services in Doha, Qatar. Quick turnaround, premium finish.',
+    'Tip Top Uniforms offers uniform alterations, repairs and made-to-measure tailoring in Doha, Qatar, with quick turnaround.',
   alternates: { canonical: '/services' },
   openGraph: {
-    title: 'Services | Tip Top Uniforms Trading',
+    title: 'Tailoring & Alterations in Doha | Tip Top Uniforms',
     description:
-      'Professional uniform alterations, repairs, and made-to-measure tailoring services in Doha, Qatar.',
-    url: 'https://tiptopuniforms.com/services',
+      'Uniform alterations, repairs and made-to-measure tailoring in Doha, Qatar.',
+    url: '/services',
   },
 };
 

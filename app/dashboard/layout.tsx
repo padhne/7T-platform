@@ -3,6 +3,11 @@ import Link from 'next/link';
 import { LayoutDashboard, LogOut, Settings, Image as ImageIcon, Home } from 'lucide-react';
 import { logoutAction } from '@/app/login/actions';
 
+export const metadata: import('next').Metadata = {
+  title: 'Dashboard',
+  robots: { index: false, follow: false },
+};
+
 export default function DashboardLayout({
   children,
 }: {

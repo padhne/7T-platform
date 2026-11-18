@@ -1,4 +1,5 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import HeroSection from '@/components/home/HeroSection';
 import FeaturesBar from '@/components/home/FeaturesBar';
 import AboutSection from '@/components/home/AboutSection';
@@ -9,6 +10,11 @@ import ProductCategories from '@/components/home/ProductCategories';
 import AlterationsSection from '@/components/home/AlterationsSection';
 import ValuesSection from '@/components/home/ValuesSection';
 import ContactSection from '@/components/home/ContactSection';
+
+export const metadata: Metadata = {
+  title: { absolute: 'Tip Top Uniforms Qatar | Uniforms & Bespoke Tailoring in Doha' },
+  alternates: { canonical: '/' },
+};
 
 export default function Home() {
   return (

@@ -20,6 +20,9 @@ interface CategoryImage {
   image_name?: string;
 }
 
+const MAX_FILES = 20;
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+
 export default function DashboardPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [images, setImages] = useState<CategoryImage[]>([]);
@@ -32,9 +35,10 @@ export default function DashboardPage() {
 
   // Image upload state
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [uploadImageName, setUploadImageName] = useState('');
   const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   // Edit state
   const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null);
@@ -142,67 +146,93 @@ export default function DashboardPage() {
 
   async function handleUploadImage(e: React.FormEvent) {
     e.preventDefault();
-    if (!selectedCategoryId || !selectedFile) {
-      setError('Please select a category and an image file.');
+    if (!selectedCategoryId || selectedFiles.length === 0) {
+      setError('Please select a category and at least one image file.');
       return;
     }
 
     setIsUploading(true);
+    setUploadProgress(0);
     setError(null);
 
+    let uploadedCount = 0;
     try {
-      // 1. Upload file to storage
-      const fileExt = selectedFile.name.split('.').pop();
-      const fileName = `${Math.random()}.${fileExt}`;
-      const filePath = `${selectedCategoryId}/${fileName}`;
+      // Upload one at a time so a failure tells us exactly which file broke
+      for (const file of selectedFiles) {
+        // 1. Upload file to storage
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${crypto.randomUUID()}.${fileExt}`;
+        const filePath = `${selectedCategoryId}/${fileName}`;
 
-      const { error: uploadError, data: uploadData } = await supabase.storage
-        .from('images')
-        .upload(filePath, selectedFile);
+        const { error: uploadError } = await supabase.storage
+          .from('images')
+          .upload(filePath, file);
 
-      if (uploadError) throw uploadError;
+        if (uploadError) throw new Error(`${file.name}: ${uploadError.message}`);
 
-      // 2. Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('images')
-        .getPublicUrl(filePath);
+        // 2. Get public URL
+        const { data: { publicUrl } } = supabase.storage
+          .from('images')
+          .getPublicUrl(filePath);
 
-      // 3. Save to database
-      const insertPayload: any = { category_id: selectedCategoryId, image_url: publicUrl };
-      if (uploadImageName.trim()) {
-        insertPayload.image_name = uploadImageName.trim();
-      }
-
-      const { data: insertData, error: insertError } = await supabase
-        .from('category_images')
-        .insert([insertPayload])
-        .select();
-
-      if (insertError) {
-        if (insertError.message.includes('image_name')) {
-          throw new Error('Please add an "image_name" column (Type: text) to your "category_images" table in Supabase to use this feature.');
+        // 3. Save to database
+        const insertPayload: any = { category_id: selectedCategoryId, image_url: publicUrl };
+        if (uploadImageName.trim()) {
+          insertPayload.image_name = uploadImageName.trim();
         }
-        throw insertError;
+
+        const { error: insertError } = await supabase
+          .from('category_images')
+          .insert([insertPayload]);
+
+        if (insertError) {
+          if (insertError.message.includes('image_name')) {
+            throw new Error('Please add an "image_name" column (Type: text) to your "category_images" table in Supabase to use this feature.');
+          }
+          throw new Error(`${file.name}: ${insertError.message}`);
+        }
+
+        uploadedCount++;
+        setUploadProgress(uploadedCount);
       }
 
-      if (insertData) {
+      setSelectedFiles([]);
+      setUploadImageName('');
+      // Reset file input (hacky but works without ref for simplicity)
+      const fileInput = document.getElementById('image-upload') as HTMLInputElement;
+      if (fileInput) fileInput.value = '';
+    } catch (err: any) {
+      const prefix = uploadedCount > 0 ? `Uploaded ${uploadedCount} of ${selectedFiles.length}, then failed — ` : '';
+      setError(prefix + (err.message || 'Failed to upload image'));
+      // Drop the files that already succeeded so a retry doesn't duplicate them
+      setSelectedFiles(selectedFiles.slice(uploadedCount));
+    } finally {
+      if (uploadedCount > 0) {
         if (currentPage === 1) {
           fetchImages(1);
         } else {
           setCurrentPage(1);
         }
-        setSelectedFile(null);
-        setUploadImageName('');
-        // Reset file input (hacky but works without ref for simplicity)
-        const fileInput = document.getElementById('image-upload') as HTMLInputElement;
-        if (fileInput) fileInput.value = '';
       }
-
-    } catch (err: any) {
-      setError(err.message || 'Failed to upload image');
-    } finally {
       setIsUploading(false);
     }
+  }
+
+  function handleFilesSelected(fileList: FileList | null) {
+    const files = Array.from(fileList || []);
+    setError(null);
+
+    if (files.length > MAX_FILES) {
+      setError(`You can upload up to ${MAX_FILES} images at a time. Only the first ${MAX_FILES} were kept.`);
+    }
+    const limited = files.slice(0, MAX_FILES);
+
+    const tooLarge = limited.filter(f => f.size > MAX_FILE_SIZE);
+    if (tooLarge.length > 0) {
+      setError(`These files are over 10MB and were skipped: ${tooLarge.map(f => f.name).join(', ')}`);
+    }
+
+    setSelectedFiles(limited.filter(f => f.size <= MAX_FILE_SIZE));
   }
 
   async function handleDeleteCategory(id: string) {
@@ -477,14 +507,27 @@ export default function DashboardPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Choose Image</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Choose Images (up to {MAX_FILES})</label>
                 <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:bg-gray-50 transition-colors relative">
                   <div className="space-y-1 text-center">
-                    {selectedFile ? (
+                    {selectedFiles.length > 0 ? (
                       <div className="text-sm text-gray-600 flex flex-col items-center">
                         <ImageIcon className="mx-auto h-12 w-12 text-blue-500 mb-2" />
-                        <span className="font-medium text-gray-900">{selectedFile.name}</span>
-                        <span>({(selectedFile.size / 1024 / 1024).toFixed(2)} MB)</span>
+                        <span className="font-medium text-gray-900">
+                          {selectedFiles.length} image{selectedFiles.length > 1 ? 's' : ''} selected
+                        </span>
+                        <span>
+                          ({(selectedFiles.reduce((sum, f) => sum + f.size, 0) / 1024 / 1024).toFixed(2)} MB total)
+                        </span>
+                        {!isUploading && (
+                          <button
+                            type="button"
+                            onClick={() => handleFilesSelected(null)}
+                            className="mt-2 text-xs text-red-500 hover:text-red-700"
+                          >
+                            Clear selection
+                          </button>
+                        )}
                       </div>
                     ) : (
                       <>
@@ -494,14 +537,15 @@ export default function DashboardPage() {
                             htmlFor="image-upload"
                             className="relative cursor-pointer rounded-md bg-white font-medium text-blue-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 hover:text-blue-500"
                           >
-                            <span>Upload a file</span>
+                            <span>Upload files</span>
                             <input
                               id="image-upload"
                               name="image-upload"
                               type="file"
                               accept="image/*"
+                              multiple
                               className="sr-only"
-                              onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+                              onChange={(e) => handleFilesSelected(e.target.files)}
                               disabled={isUploading}
                             />
                           </label>
@@ -512,7 +556,7 @@ export default function DashboardPage() {
                     )}
                   </div>
                   {/* Invisible overlay for full area click */}
-                  {!selectedFile && (
+                  {selectedFiles.length === 0 && (
                     <label htmlFor="image-upload" className="absolute inset-0 cursor-pointer w-full h-full"></label>
                   )}
                 </div>
@@ -532,16 +576,16 @@ export default function DashboardPage() {
 
               <button
                 type="submit"
-                disabled={isUploading || !selectedCategoryId || !selectedFile}
+                disabled={isUploading || !selectedCategoryId || selectedFiles.length === 0}
                 className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
                 {isUploading ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin mr-2" />
-                    Uploading...
+                    Uploading {uploadProgress + 1} of {selectedFiles.length}...
                   </>
                 ) : (
-                  'Upload Image'
+                  selectedFiles.length > 1 ? `Upload ${selectedFiles.length} Images` : 'Upload Image'
                 )}
               </button>
             </form>
